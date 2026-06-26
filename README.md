@@ -57,13 +57,31 @@ endpoint `POST /api/recommendations/sync` las persiste en Supabase y está pensa
 para un cron (p. ej. Vercel Cron). El dashboard prioriza: **Supabase → motor
 (partidos reales) → datos de ejemplo**, indicándolo con un badge.
 
-## 🔐 Autenticación (Supabase Auth)
+## 🔐 Acceso por niveles (Supabase Auth + SSR)
 
-- Página `/login` con login y registro (email + contraseña).
-- `lib/useUser.ts` expone la sesión y se suscribe a sus cambios.
-- El `Header` muestra el email y "Cerrar sesión" cuando hay sesión activa.
+PRISM separa el contenido por nivel de acceso, gestionado con `@supabase/ssr`
+(sesión por cookies) y un `middleware.ts` que protege las rutas:
 
-Requiere tener Supabase Auth habilitado en tu proyecto.
+| Página | Acceso |
+| --- | --- |
+| `/` (landing) | Pública — solo muestra lo gratuito; el Dashboard no aparece en el menú. |
+| `/login` | Registro (con aceptación de términos + opt-in de correo) e inicio de sesión. |
+| `/cuenta` | Usuarios registrados — gestiona preferencias y suscripción de correo. |
+| `/precios` | Upsell a Premium (destino al intentar entrar al Dashboard sin pagar). |
+| `/dashboard` | **Solo Premium** — el middleware redirige a `/login` (sin sesión) o `/precios` (sin Premium). |
+
+- Al registrarse, un trigger SQL crea el `profile` con `terms_accepted` y
+  `marketing_opt_in` (para campañas de correo) y un `preferences` (jsonb).
+- El `Header` muestra "Mi cuenta" a usuarios registrados y "Dashboard" solo a Premium.
+- Al confirmarse un pago en Flow, el webhook marca `is_premium = true` y se
+  desbloquea el Dashboard.
+
+Requiere Supabase Auth habilitado. Sin Supabase configurado, el middleware deja
+pasar (modo demo con datos de ejemplo).
+
+> **Datos en vivo:** `lib/football.ts` consume `https://api.football-data.org/v4/matches`.
+> Requiere una API key gratuita (`FOOTBALL_DATA_API_KEY`) y red abierta — funciona
+> en Vercel, no en entornos con la API bloqueada.
 
 ## 📢 Publicidad (Google AdSense)
 

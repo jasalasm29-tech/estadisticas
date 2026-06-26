@@ -1,4 +1,4 @@
-import { supabase, isSupabaseConfigured } from "./supabase";
+import { createClient, isSupabaseConfigured } from "./supabase/server";
 import { mockRecommendations, mockRoiData, mockWinLossData } from "./mockData";
 import { Recommendation, RoiDataPoint } from "./types";
 import { getUpcomingMatches, isFootballConfigured } from "./football";
@@ -42,7 +42,8 @@ export async function getRecommendations(): Promise<{
   source: DataSource;
 }> {
   // 1) Supabase: recomendaciones persistidas (curadas o sincronizadas).
-  if (isSupabaseConfigured && supabase) {
+  if (isSupabaseConfigured) {
+    const supabase = createClient();
     const { data, error } = await supabase
       .from("recommendations")
       .select("*")

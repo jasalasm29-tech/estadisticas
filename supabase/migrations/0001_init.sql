@@ -9,12 +9,39 @@ create extension if not exists "pgcrypto";
 -- Perfil de cada usuario, ligado a auth.users de Supabase.
 -- ───────────────────────────────────────────────────────────
 create table if not exists public.profiles (
-  id          uuid primary key references auth.users (id) on delete cascade,
-  email       text unique not null,
-  is_premium  boolean not null default false,
+  id            uuid primary key references auth.users (id) on delete cascade,
+  email         text unique not null,
+  is_premium    boolean not null default false,
   premium_until timestamptz,
-  created_at  timestamptz not null default now()
+  terms_accepted   boolean not null default false,
+  marketing_opt_in boolean not null default false,
+  preferences   jsonb not null default '{}'::jsonb,
+  created_at    timestamptz not null default now()
 );
+
+-- Crea automáticamente un perfil al registrarse un usuario en auth.users.
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  insert into public.profiles (id, email, terms_accepted, marketing_opt_in)
+  values (
+    new.id,
+    new.email,
+    coalesce((new.raw_user_meta_data ->> 'terms_accepted')::boolean, false),
+    coalesce((new.raw_user_meta_data ->> 'marketing_opt_in')::boolean, false)
+  )
+  on conflict (id) do nothing;
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute function public.handle_new_user();
 
 -- ───────────────────────────────────────────────────────────
 -- Tabla: subscriptions

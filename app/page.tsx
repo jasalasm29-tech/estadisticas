@@ -75,11 +75,11 @@ export default function HomePage() {
             bankroll y seguimiento de ROI. Todo en una plataforma moderna.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/dashboard" className="btn-primary">
-              Acceder al Dashboard
+            <Link href="/login" className="btn-primary">
+              Registrarse gratis
             </Link>
             <Link href="#features" className="btn-secondary">
-              Ver Análisis
+              Ver características
             </Link>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-            <Link href="/dashboard" className="btn-secondary mt-8 w-full">
+            <Link href="/login" className="btn-secondary mt-8 w-full">
               Comenzar gratis
             </Link>
           </div>
@@ -188,8 +188,8 @@ export default function HomePage() {
             hoy mismo.
           </p>
           <div className="mt-8">
-            <Link href="/dashboard" className="btn-primary">
-              Acceder al Dashboard
+            <Link href="/login" className="btn-primary">
+              Registrarse gratis
             </Link>
           </div>
         </div>

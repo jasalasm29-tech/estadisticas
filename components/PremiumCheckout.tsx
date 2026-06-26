@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 /**
  * Botón de suscripción Premium. En producción inicia el flujo de pago
@@ -18,11 +19,18 @@ export default function PremiumCheckout({
   async function handleCheckout() {
     setLoading(true);
     try {
+      // Adjunta el email de la sesión para ligar la orden al perfil.
+      let email: string | undefined;
+      if (isSupabaseConfigured) {
+        const { data } = await createClient().auth.getUser();
+        email = data.user?.email ?? undefined;
+      }
+
       // Crea la orden en Flow.cl y redirige a la URL de pago devuelta.
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ email }),
       });
 
       if (!res.ok) {

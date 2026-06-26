@@ -6,17 +6,19 @@ import { useRouter } from "next/navigation";
 import Logo from "./Logo";
 import { useUser } from "@/lib/useUser";
 
-const navLinks = [
-  { href: "/", label: "Inicio" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/#pricing", label: "Planes" },
-];
-
 /** Header global: logo PRISM, navbar y botones de autenticación. */
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const { user, signOut } = useUser();
+  const { user, isPremium, signOut } = useUser();
   const router = useRouter();
+
+  // El Dashboard solo es visible para usuarios Premium.
+  const navLinks = [
+    { href: "/", label: "Inicio" },
+    { href: "/#pricing", label: "Planes" },
+    ...(user ? [{ href: "/cuenta", label: "Mi cuenta" }] : []),
+    ...(isPremium ? [{ href: "/dashboard", label: "Dashboard" }] : []),
+  ];
 
   async function handleSignOut() {
     await signOut();

@@ -1,17 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 type Mode = "signin" | "signup";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const params = useSearchParams();
+  const next = params.get("next") ?? "/cuenta";
+
   const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [terms, setTerms] = useState(false);
+  const [marketing, setMarketing] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -21,22 +26,35 @@ export default function LoginPage() {
     setError(null);
     setMessage(null);
 
-    if (!isSupabaseConfigured || !supabase) {
+    if (!isSupabaseConfigured) {
       setError("Autenticación no disponible: Supabase no está configurado.");
+      return;
+    }
+    if (mode === "signup" && !terms) {
+      setError("Debes aceptar los términos para registrarte.");
       return;
     }
 
     setLoading(true);
+    const supabase = createClient();
     try {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        router.push("/dashboard");
+        router.push(next);
         router.refresh();
       } else {
-        const { error } = await supabase.auth.signUp({ email, password });
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { terms_accepted: terms, marketing_opt_in: marketing },
+          },
+        });
         if (error) throw error;
-        setMessage("Revisa tu correo para confirmar la cuenta.");
+        setMessage(
+          "Cuenta creada. Revisa tu correo para confirmarla y empezar gratis."
+        );
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ocurrió un error.");
@@ -49,15 +67,14 @@ export default function LoginPage() {
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-12">
       <div className="glass p-8">
         <h1 className="text-2xl font-bold text-gray-900">
-          {mode === "signin" ? "Iniciar sesión" : "Crear cuenta"}
+          {mode === "signin" ? "Iniciar sesión" : "Crear cuenta gratis"}
         </h1>
         <p className="mt-1 text-sm text-gray-600">
           {mode === "signin"
-            ? "Accede a tu dashboard de PRISM."
-            : "Empieza gratis en segundos."}
+            ? "Accede a tu cuenta de PRISM."
+            : "Regístrate gratis y guarda tus preferencias."}
         </p>
 
-        {/* Tabs */}
         <div className="mt-6 flex gap-2 rounded-xl bg-gray-100 p-1">
           {(["signin", "signup"] as Mode[]).map((m) => (
             <button
@@ -107,6 +124,35 @@ export default function LoginPage() {
             />
           </div>
 
+          {mode === "signup" && (
+            <div className="space-y-2">
+              <label className="flex items-start gap-2 text-sm text-gray-700">
+                <input
+                  type="checkbox"
+                  checked={terms}
+                  onChange={(e) => setTerms(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 accent-google-blue"
+                />
+                <span>
+                  Acepto los{" "}
+                  <Link href="#" className="text-google-blue hover:underline">
+                    términos y la política de privacidad
+                  </Link>
+                  .
+                </span>
+              </label>
+              <label className="flex items-start gap-2 text-sm text-gray-700">
+                <input
+                  type="checkbox"
+                  checked={marketing}
+                  onChange={(e) => setMarketing(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 accent-google-blue"
+                />
+                <span>Quiero recibir novedades y recomendaciones por correo.</span>
+              </label>
+            </div>
+          )}
+
           {error && <p className="text-sm text-google-red">{error}</p>}
           {message && <p className="text-sm text-google-green">{message}</p>}
 
@@ -114,15 +160,15 @@ export default function LoginPage() {
             {loading ? "Procesando…" : mode === "signin" ? "Entrar" : "Crear cuenta"}
           </button>
         </form>
-
-        <p className="mt-6 text-center text-xs text-gray-500">
-          Al continuar aceptas los{" "}
-          <Link href="#" className="text-google-blue hover:underline">
-            términos
-          </Link>{" "}
-          de PRISM.
-        </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }
