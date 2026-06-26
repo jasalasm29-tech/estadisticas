@@ -123,8 +123,26 @@ La integración con Flow.cl ya está implementada:
 - `PremiumCheckout` llama a `/api/checkout` y redirige al usuario a Flow.
 
 Usa el sandbox (`sandbox.flow.cl`) en desarrollo y producción real en `NODE_ENV=production`.
-Configura `NEXT_PUBLIC_FLOW_API_KEY` y `FLOW_SECRET_KEY`. Pendiente: persistir el
-estado Premium en Supabase dentro del webhook de confirmación (marcado con `TODO`).
+Configura `NEXT_PUBLIC_FLOW_API_KEY` y `FLOW_SECRET_KEY`.
+
+El webhook ya **persiste el estado Premium en Supabase**: al crear la orden se
+registra como `pending` y, al confirmarse el pago, `activatePremium()` marca la
+orden como `paid` y activa `is_premium` en el perfil por 30 días.
+
+## 🗄️ Base de datos (Supabase)
+
+El esquema está en `supabase/migrations/0001_init.sql` (tablas `profiles`,
+`subscriptions`, `recommendations` con Row Level Security). Aplícalo con:
+
+```bash
+# vía Supabase CLI
+supabase db push
+# o pega el SQL en el SQL Editor del dashboard de Supabase
+```
+
+Requiere `SUPABASE_SERVICE_ROLE_KEY` (solo servidor) para que el webhook pueda
+escribir omitiendo RLS. Si Supabase no está configurado, la app sigue
+funcionando con datos mock.
 
 ## ⚠️ Juego responsable
 

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FLOW_API_URL, isFlowConfigured, signParams } from "@/lib/flow";
+import { isSupabaseAdminConfigured } from "@/lib/supabase";
+import { activatePremium, rejectSubscription } from "@/lib/subscriptions";
 
 const FLOW_API_KEY = process.env.NEXT_PUBLIC_FLOW_API_KEY ?? "";
 
@@ -29,11 +31,13 @@ export async function POST(req: NextRequest) {
     const res = await fetch(`${FLOW_API_URL}/payment/getStatus?${query}`);
     const data = (await res.json()) as { status: number; commerceOrder: string };
 
-    if (data.status === 2) {
-      // Pago confirmado: activar la suscripción Premium del usuario.
-      // TODO: persistir en Supabase el estado premium de la cuenta asociada
-      // a data.commerceOrder.
-      console.log(`Pago confirmado para orden ${data.commerceOrder}`);
+    // Estados de Flow: 1=pendiente, 2=pagado, 3=rechazado, 4=anulado.
+    if (isSupabaseAdminConfigured && data.commerceOrder) {
+      if (data.status === 2) {
+        await activatePremium(data.commerceOrder);
+      } else if (data.status === 3 || data.status === 4) {
+        await rejectSubscription(data.commerceOrder);
+      }
     }
 
     // Flow espera un 200 para considerar entregada la confirmación.
