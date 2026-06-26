@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Logo from "./Logo";
+import { useUser } from "@/lib/useUser";
 
 const navLinks = [
   { href: "/", label: "Inicio" },
@@ -13,6 +15,15 @@ const navLinks = [
 /** Header global: logo PRISM, navbar y botones de autenticación. */
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { user, signOut } = useUser();
+  const router = useRouter();
+
+  async function handleSignOut() {
+    await signOut();
+    setOpen(false);
+    router.push("/");
+    router.refresh();
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-md">
@@ -35,12 +46,31 @@ export default function Header() {
 
         {/* Auth desktop */}
         <div className="hidden items-center gap-3 md:flex">
-          <button className="text-sm font-medium text-gray-600 transition-colors hover:text-google-blue">
-            Iniciar sesión
-          </button>
-          <Link href="/dashboard" className="btn-primary !px-5 !py-2 text-sm">
-            Registrarse
-          </Link>
+          {user ? (
+            <>
+              <span className="max-w-[160px] truncate text-sm text-gray-600">
+                {user.email}
+              </span>
+              <button
+                onClick={handleSignOut}
+                className="text-sm font-medium text-gray-600 transition-colors hover:text-google-red"
+              >
+                Cerrar sesión
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-sm font-medium text-gray-600 transition-colors hover:text-google-blue"
+              >
+                Iniciar sesión
+              </Link>
+              <Link href="/login" className="btn-primary !px-5 !py-2 text-sm">
+                Registrarse
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Toggle móvil */}
@@ -82,14 +112,31 @@ export default function Header() {
               </li>
             ))}
             <li className="flex flex-col gap-3 pt-2">
-              <button className="btn-secondary !py-2 text-sm">Iniciar sesión</button>
-              <Link
-                href="/dashboard"
-                className="btn-primary !py-2 text-sm"
-                onClick={() => setOpen(false)}
-              >
-                Registrarse
-              </Link>
+              {user ? (
+                <>
+                  <span className="truncate text-sm text-gray-600">{user.email}</span>
+                  <button onClick={handleSignOut} className="btn-secondary !py-2 text-sm">
+                    Cerrar sesión
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="btn-secondary !py-2 text-sm"
+                    onClick={() => setOpen(false)}
+                  >
+                    Iniciar sesión
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="btn-primary !py-2 text-sm"
+                    onClick={() => setOpen(false)}
+                  >
+                    Registrarse
+                  </Link>
+                </>
+              )}
             </li>
           </ul>
         </div>

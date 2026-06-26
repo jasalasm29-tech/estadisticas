@@ -3,6 +3,7 @@ import StatCard from "@/components/StatCard";
 import DashboardCharts from "@/components/DashboardCharts";
 import RecommendationsTable from "@/components/RecommendationsTable";
 import PremiumCheckout from "@/components/PremiumCheckout";
+import AdSlot from "@/components/AdSlot";
 import { getRecommendations, computeStats } from "@/lib/recommendations";
 import { Stat } from "@/lib/types";
 
@@ -45,12 +46,16 @@ export default async function DashboardPage() {
         </div>
         <span
           className={`rounded-full px-3 py-1 text-xs font-semibold ${
-            source === "supabase"
-              ? "bg-google-green/10 text-google-green"
-              : "bg-google-yellow/15 text-[#b8860b]"
+            source === "mock"
+              ? "bg-google-yellow/15 text-[#b8860b]"
+              : "bg-google-green/10 text-google-green"
           }`}
         >
-          {source === "supabase" ? "● Datos en vivo" : "● Datos de ejemplo"}
+          {source === "supabase"
+            ? "● Datos en vivo (Supabase)"
+            : source === "engine"
+            ? "● Partidos reales (Football-Data)"
+            : "● Datos de ejemplo"}
         </span>
       </header>
 
@@ -60,6 +65,11 @@ export default async function DashboardPage() {
           <StatCard key={s.label} {...s} />
         ))}
       </section>
+
+      {/* Anuncio (banner) */}
+      <div className="mt-8">
+        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_DASHBOARD} />
+      </div>
 
       {/* Gráficos */}
       <section className="mt-8">
@@ -83,6 +93,11 @@ export default async function DashboardPage() {
         </div>
         <PremiumCheckout />
       </section>
+
+      {/* Anuncio (banner inferior) */}
+      <div className="mt-8">
+        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_DASHBOARD_FOOTER} label="Publicidad" />
+      </div>
     </div>
   );
 }

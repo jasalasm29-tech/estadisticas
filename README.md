@@ -49,6 +49,30 @@ Para activar datos reales en Vercel: configura `NEXT_PUBLIC_SUPABASE_URL`,
 `NEXT_PUBLIC_SUPABASE_ANON_KEY` y `FOOTBALL_DATA_API_KEY` en las variables de
 entorno del proyecto, aplica las migraciones y el seed.
 
+### Motor de recomendaciones
+
+`lib/engine.ts` convierte los próximos partidos reales en recomendaciones con
+probabilidad, cuota y Expected Value, devolviendo solo las de EV positivo. El
+endpoint `POST /api/recommendations/sync` las persiste en Supabase y está pensado
+para un cron (p. ej. Vercel Cron). El dashboard prioriza: **Supabase → motor
+(partidos reales) → datos de ejemplo**, indicándolo con un badge.
+
+## 🔐 Autenticación (Supabase Auth)
+
+- Página `/login` con login y registro (email + contraseña).
+- `lib/useUser.ts` expone la sesión y se suscribe a sus cambios.
+- El `Header` muestra el email y "Cerrar sesión" cuando hay sesión activa.
+
+Requiere tener Supabase Auth habilitado en tu proyecto.
+
+## 📢 Publicidad (Google AdSense)
+
+Tanto la home como el dashboard reservan espacios para anuncios mediante el
+componente `AdSlot`. Con `NEXT_PUBLIC_GOOGLE_ADSENSE_ID` y los IDs de bloque
+(`NEXT_PUBLIC_ADSENSE_SLOT_*`) se renderizan anuncios reales; sin ellos se muestra
+un placeholder que reserva el espacio en el layout. El script de AdSense se carga
+en `app/layout.tsx` solo cuando hay client ID.
+
 ## 📁 Estructura
 
 ```

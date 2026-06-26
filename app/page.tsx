@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PremiumCheckout from "@/components/PremiumCheckout";
+import AdSlot from "@/components/AdSlot";
 
 const features = [
   {
@@ -109,6 +110,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Anuncio (banner) */}
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_HOME} />
+      </div>
+
       {/* PRICING */}
       <section id="pricing" className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center">
@@ -165,6 +171,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Anuncio (banner inferior) */}
+      <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_FOOTER} label="Publicidad" />
+      </div>
 
       {/* CTA final */}
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
