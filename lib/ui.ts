@@ -1,17 +1,18 @@
 import { RecommendationStatus, RiskLevel } from "./types";
 
 // Mapeos de estilos reutilizables para badges de riesgo y estado.
+// Paleta Google: verde (bajo/ganada), amarillo (medio/pendiente), rojo (alto/perdida), azul.
 
 export const riskStyles: Record<RiskLevel, string> = {
-  low: "bg-cyan/10 text-cyan border border-cyan/30",
-  medium: "bg-amber-400/10 text-amber-300 border border-amber-400/30",
-  high: "bg-magenta/10 text-magenta border border-magenta/30",
+  low: "bg-google-green/10 text-google-green border border-google-green/30",
+  medium: "bg-google-yellow/15 text-[#b8860b] border border-google-yellow/40",
+  high: "bg-google-red/10 text-google-red border border-google-red/30",
 };
 
 export const statusStyles: Record<RecommendationStatus, string> = {
-  pending: "bg-gray-500/15 text-gray-300 border border-gray-400/30",
-  won: "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30",
-  lost: "bg-red-500/15 text-red-300 border border-red-500/30",
+  pending: "bg-google-blue/10 text-google-blue border border-google-blue/30",
+  won: "bg-google-green/10 text-google-green border border-google-green/30",
+  lost: "bg-google-red/10 text-google-red border border-google-red/30",
 };
 
 export const statusLabels: Record<RecommendationStatus, string> = {

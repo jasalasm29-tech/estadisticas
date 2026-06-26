@@ -15,7 +15,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0B1120]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Logo />
 
@@ -25,7 +25,7 @@ export default function Header() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="text-sm font-medium text-gray-300 transition-colors hover:text-cyan"
+                className="text-sm font-medium text-gray-600 transition-colors hover:text-google-blue"
               >
                 {link.label}
               </Link>
@@ -35,7 +35,7 @@ export default function Header() {
 
         {/* Auth desktop */}
         <div className="hidden items-center gap-3 md:flex">
-          <button className="text-sm font-medium text-gray-300 transition-colors hover:text-white">
+          <button className="text-sm font-medium text-gray-600 transition-colors hover:text-google-blue">
             Iniciar sesión
           </button>
           <Link href="/dashboard" className="btn-primary !px-5 !py-2 text-sm">
@@ -45,7 +45,7 @@ export default function Header() {
 
         {/* Toggle móvil */}
         <button
-          className="rounded-lg p-2 text-gray-300 hover:bg-white/10 md:hidden"
+          className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 md:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Abrir menú"
           aria-expanded={open}
@@ -68,13 +68,13 @@ export default function Header() {
 
       {/* Menú móvil */}
       {open && (
-        <div className="border-t border-white/10 px-4 py-4 md:hidden">
+        <div className="border-t border-gray-200 bg-white px-4 py-4 md:hidden">
           <ul className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="block text-sm font-medium text-gray-300 hover:text-cyan"
+                  className="block text-sm font-medium text-gray-600 hover:text-google-blue"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}

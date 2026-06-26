@@ -22,25 +22,25 @@ const footerLinks = {
 /** Footer global: links, copyright y redes sociales. */
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#0B1120]">
+    <footer className="border-t border-gray-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           <div className="col-span-2 md:col-span-1">
             <Logo />
-            <p className="mt-4 max-w-xs text-sm text-gray-400">
+            <p className="mt-4 max-w-xs text-sm text-gray-500">
               Transforma datos en decisiones inteligentes.
             </p>
           </div>
 
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
-              <h3 className="text-sm font-semibold text-white">{title}</h3>
+              <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
               <ul className="mt-4 space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-gray-400 transition-colors hover:text-cyan"
+                      className="text-sm text-gray-500 transition-colors hover:text-google-blue"
                     >
                       {link.label}
                     </Link>
@@ -51,7 +51,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-8 sm:flex-row">
           <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} PRISM. Todos los derechos reservados.
           </p>
@@ -61,7 +61,7 @@ export default function Footer() {
                 key={social}
                 href="#"
                 aria-label={social}
-                className="text-gray-400 transition-colors hover:text-cyan"
+                className="text-gray-400 transition-colors hover:text-google-blue"
               >
                 <span className="sr-only">{social}</span>
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">

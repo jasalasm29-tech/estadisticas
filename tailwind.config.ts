@@ -9,22 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Paleta PRISM
-        cyan: {
-          DEFAULT: "#06B6D4",
-        },
-        magenta: {
-          DEFAULT: "#EC4899",
-        },
-        dark: {
-          DEFAULT: "#1F2937",
+        // Paleta Google
+        google: {
+          blue: "#4285F4",
+          red: "#EA4335",
+          yellow: "#FBBC05",
+          green: "#34A853",
         },
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
       },
       backgroundImage: {
-        "prism-gradient": "linear-gradient(135deg, #06B6D4 0%, #EC4899 100%)",
+        // Gradiente multicolor estilo Google (azul → verde → amarillo → rojo)
+        "prism-gradient":
+          "linear-gradient(135deg, #4285F4 0%, #34A853 35%, #FBBC05 70%, #EA4335 100%)",
       },
       keyframes: {
         "fade-in-up": {

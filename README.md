@@ -30,9 +30,24 @@ glassmorphism.
 
 ## 🎨 Diseño
 
-- **Colores:** Cyan `#06B6D4`, Magenta `#EC4899`, Gris oscuro `#1F2937`
+- **Colores Google:** Azul `#4285F4`, Rojo `#EA4335`, Amarillo `#FBBC05`, Verde `#34A853`
 - **Tipografía:** Inter
-- **Estilo:** Dark mode, glassmorphism, gradientes cyan/magenta
+- **Estilo:** Tema claro, glassmorphism suave, acentos multicolor estilo Google
+
+## 📡 Datos reales
+
+El dashboard intenta leer **datos en vivo** y cae a datos de ejemplo si no hay
+configuración (lo verás indicado con el badge "Datos en vivo" / "Datos de ejemplo"):
+
+- **Recomendaciones** — `lib/recommendations.ts` lee la tabla `recommendations`
+  de Supabase. Ejecuta `supabase/seed.sql` para poblarla.
+- **Partidos reales** — `lib/football.ts` + `GET /api/matches` traen los próximos
+  partidos desde [Football-Data.org](https://www.football-data.org/) usando
+  `FOOTBALL_DATA_API_KEY`.
+
+Para activar datos reales en Vercel: configura `NEXT_PUBLIC_SUPABASE_URL`,
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` y `FOOTBALL_DATA_API_KEY` en las variables de
+entorno del proyecto, aplica las migraciones y el seed.
 
 ## 📁 Estructura
 

@@ -33,7 +33,7 @@ export default function RecommendationsTable({
   return (
     <section className="glass p-5">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h3 className="font-semibold text-white">Recomendaciones activas</h3>
+        <h3 className="font-semibold text-gray-900">Recomendaciones activas</h3>
         <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filtrar por estado">
           {filters.map((f) => (
             <button
@@ -43,8 +43,8 @@ export default function RecommendationsTable({
               onClick={() => setFilter(f.value)}
               className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                 filter === f.value
-                  ? "bg-prism-gradient text-white"
-                  : "bg-white/5 text-gray-300 hover:bg-white/10"
+                  ? "bg-google-blue text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
               {f.label}
@@ -57,7 +57,7 @@ export default function RecommendationsTable({
       <div className="mt-6 hidden overflow-x-auto md:block">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-white/10 text-xs uppercase tracking-wide text-gray-400">
+            <tr className="border-b border-gray-200 text-xs uppercase tracking-wide text-gray-500">
               <th className="px-3 py-3">Match</th>
               <th className="px-3 py-3">Tipo</th>
               <th className="px-3 py-3">Recomendación</th>
@@ -72,14 +72,14 @@ export default function RecommendationsTable({
             {filtered.map((rec) => (
               <tr
                 key={rec.id}
-                className="border-b border-white/5 transition-colors hover:bg-white/5"
+                className="border-b border-gray-100 transition-colors hover:bg-gray-50"
               >
-                <td className="px-3 py-4 font-medium text-white">{rec.match}</td>
-                <td className="px-3 py-4 text-gray-300">{rec.type}</td>
-                <td className="px-3 py-4 text-gray-300">{rec.recommendation}</td>
-                <td className="px-3 py-4 text-gray-300">{rec.probability}%</td>
-                <td className="px-3 py-4 text-gray-300">{rec.odds.toFixed(2)}x</td>
-                <td className="px-3 py-4 font-semibold text-cyan">+{rec.expectedValue}%</td>
+                <td className="px-3 py-4 font-medium text-gray-900">{rec.match}</td>
+                <td className="px-3 py-4 text-gray-600">{rec.type}</td>
+                <td className="px-3 py-4 text-gray-600">{rec.recommendation}</td>
+                <td className="px-3 py-4 text-gray-600">{rec.probability}%</td>
+                <td className="px-3 py-4 text-gray-600">{rec.odds.toFixed(2)}x</td>
+                <td className="px-3 py-4 font-semibold text-google-green">+{rec.expectedValue}%</td>
                 <td className="px-3 py-4">
                   <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${riskStyles[rec.risk]}`}>
                     {rec.risk}

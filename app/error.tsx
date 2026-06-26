@@ -17,8 +17,8 @@ export default function Error({
 
   return (
     <div className="mx-auto flex max-w-md flex-col items-center px-4 py-32 text-center">
-      <h1 className="text-2xl font-bold text-white">Algo salió mal</h1>
-      <p className="mt-2 text-gray-400">
+      <h1 className="text-2xl font-bold text-gray-900">Algo salió mal</h1>
+      <p className="mt-2 text-gray-600">
         Ocurrió un error inesperado. Inténtalo nuevamente.
       </p>
       <button onClick={reset} className="btn-primary mt-6">

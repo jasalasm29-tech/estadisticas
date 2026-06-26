@@ -13,37 +13,44 @@ import {
   Cell,
   Legend,
 } from "recharts";
-import { mockRoiData, mockWinLossData } from "@/lib/mockData";
+import { RoiDataPoint } from "@/lib/types";
 
-const PIE_COLORS = ["#06B6D4", "#EC4899"];
+// Verde (ganadas) y rojo (perdidas), estilo Google.
+const PIE_COLORS = ["#34A853", "#EA4335"];
+
+interface DashboardChartsProps {
+  roiData: RoiDataPoint[];
+  winLoss: { name: string; value: number }[];
+}
+
+const tooltipStyle = {
+  background: "#ffffff",
+  border: "1px solid #e5e7eb",
+  borderRadius: 12,
+  color: "#111827",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+} as const;
 
 /** Gráficos del dashboard: ROI semanal (línea) y ganadas/perdidas (pie). */
-export default function DashboardCharts() {
+export default function DashboardCharts({ roiData, winLoss }: DashboardChartsProps) {
   return (
     <div className="grid gap-6 lg:grid-cols-2">
       {/* ROI semanal */}
       <div className="glass p-5">
-        <h3 className="mb-4 font-semibold text-white">ROI semanal</h3>
+        <h3 className="mb-4 font-semibold text-gray-900">ROI semanal</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={mockRoiData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="week" stroke="#9CA3AF" fontSize={12} />
-              <YAxis stroke="#9CA3AF" fontSize={12} unit="%" />
-              <Tooltip
-                contentStyle={{
-                  background: "#1F2937",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 12,
-                  color: "#fff",
-                }}
-              />
+            <LineChart data={roiData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="week" stroke="#6b7280" fontSize={12} />
+              <YAxis stroke="#6b7280" fontSize={12} unit="%" />
+              <Tooltip contentStyle={tooltipStyle} />
               <Line
                 type="monotone"
                 dataKey="roi"
-                stroke="#06B6D4"
+                stroke="#4285F4"
                 strokeWidth={3}
-                dot={{ fill: "#EC4899", r: 4 }}
+                dot={{ fill: "#EA4335", r: 4 }}
                 activeDot={{ r: 6 }}
               />
             </LineChart>
@@ -53,12 +60,12 @@ export default function DashboardCharts() {
 
       {/* Ganadas vs perdidas */}
       <div className="glass p-5">
-        <h3 className="mb-4 font-semibold text-white">Ganadas vs Perdidas</h3>
+        <h3 className="mb-4 font-semibold text-gray-900">Ganadas vs Perdidas</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                data={mockWinLossData}
+                data={winLoss}
                 dataKey="value"
                 nameKey="name"
                 cx="50%"
@@ -68,19 +75,12 @@ export default function DashboardCharts() {
                 paddingAngle={4}
                 label={({ value }) => `${value}%`}
               >
-                {mockWinLossData.map((_, i) => (
+                {winLoss.map((_, i) => (
                   <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip
-                contentStyle={{
-                  background: "#1F2937",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 12,
-                  color: "#fff",
-                }}
-              />
-              <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 13 }} />
+              <Tooltip contentStyle={tooltipStyle} />
+              <Legend wrapperStyle={{ color: "#6b7280", fontSize: 13 }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
