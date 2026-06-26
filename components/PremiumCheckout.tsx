@@ -18,13 +18,25 @@ export default function PremiumCheckout({
   async function handleCheckout() {
     setLoading(true);
     try {
-      // TODO: llamar al endpoint que crea la orden en Flow.cl y redirigir
-      // a la URL de pago devuelta. Ejemplo:
-      // const res = await fetch("/api/checkout", { method: "POST" });
-      // const { url } = await res.json();
-      // window.location.href = url;
-      await new Promise((r) => setTimeout(r, 1200));
-      alert("Integración de pago con Flow.cl pendiente de configurar.");
+      // Crea la orden en Flow.cl y redirige a la URL de pago devuelta.
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+
+      if (!res.ok) {
+        const { error } = await res.json().catch(() => ({ error: "" }));
+        alert(error || "No se pudo iniciar el pago. Inténtalo más tarde.");
+        return;
+      }
+
+      const { url } = await res.json();
+      if (url) {
+        window.location.href = url;
+      }
+    } catch {
+      alert("Error de red al iniciar el pago.");
     } finally {
       setLoading(false);
     }

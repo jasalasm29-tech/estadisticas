@@ -114,9 +114,17 @@ npm start
 
 ## 💳 Pagos (Flow.cl)
 
-`PremiumCheckout` está preparado para iniciar el flujo de pago de Flow.cl.
-Implementa un endpoint (`/api/checkout`) que cree la orden con tus credenciales
-(`FLOW_SECRET_KEY`, `FLOW_COMMERCE_CODE`) y redirige a la URL de pago.
+La integración con Flow.cl ya está implementada:
+
+- `lib/flow.ts` — firma HMAC-SHA256 de parámetros y `createFlowPayment`.
+- `POST /api/checkout` — crea la orden Premium ($6.990 CLP) y devuelve la URL de pago.
+- `POST /api/checkout/confirm` — webhook (`urlConfirmation`) que valida el estado
+  real del pago vía `getStatus`.
+- `PremiumCheckout` llama a `/api/checkout` y redirige al usuario a Flow.
+
+Usa el sandbox (`sandbox.flow.cl`) en desarrollo y producción real en `NODE_ENV=production`.
+Configura `NEXT_PUBLIC_FLOW_API_KEY` y `FLOW_SECRET_KEY`. Pendiente: persistir el
+estado Premium en Supabase dentro del webhook de confirmación (marcado con `TODO`).
 
 ## ⚠️ Juego responsable
 
