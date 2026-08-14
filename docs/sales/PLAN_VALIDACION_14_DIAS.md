@@ -41,6 +41,41 @@ explícitamente *"generar reportes en Excel y mantener registros"*, y un mercado
 plantillas Excel para *"calcular automáticamente los días de atraso en pedidos demorados"*.
 La demanda de plantillas es el mejor proxy de que el proceso sigue siendo manual.
 
+## La herramienta
+
+El plan se opera desde `/validacion` en la app del repo:
+
+```bash
+npm install
+npm run dev
+# abrir http://localhost:3000/validacion
+```
+
+No requiere Supabase, ni cuenta, ni configuración, ni conexión: guarda todo en
+`localStorage` del navegador. **Costo CLP 0, funciona de inmediato.**
+
+Qué hace, y por qué cada cosa:
+
+| Función | Para qué |
+| --- | --- |
+| Pipeline de prospectos | Que no se pierda ninguna de las 40 conversaciones |
+| Mensaje autogenerado por canal | Elimina la fricción de redactar 40 veces; se personaliza y se copia |
+| Guion de las 5 preguntas | Registrar **palabras textuales**, que después son el copy de la landing |
+| Etiquetado de dolores | Contar menciones **espontáneas** para detectar el patrón |
+| Ranking de dolores | Ver cuál cruza el umbral de 8 menciones |
+| Suma de dinero declarado | El argumento de venta más fuerte, dicho por el cliente y no por ti |
+| **Criterios de muerte automáticos** | La app avisa sola cuando toca matar la hipótesis, para que la decisión no dependa del ánimo del día |
+| Respaldar / Restaurar | Exporta JSON para no perder el trabajo si se limpia el navegador |
+
+> Úsala en local (`npm run dev`). No hace falta desplegarla, y no desplegarla es
+> también la opción de costo cero.
+
+**Nota de datos personales:** vas a guardar nombres y contactos de personas reales.
+Están sólo en tu navegador y tú eres el responsable del tratamiento. Por eso todas las
+plantillas incluyen una salida explícita ("si no quieres que te escriba, dímelo"): hoy
+lo pide la Ley 19.628 y desde el **1 de diciembre de 2026** la Ley 21.719 endurece la
+exigencia a consentimiento explícito. Respeta cada baja a la primera.
+
 ## Días 1–2 — Construir la lista (0 pesos)
 
 Meta: **60 sellers chilenos** identificables y contactables.
