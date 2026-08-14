@@ -136,3 +136,102 @@ Value/bankroll, `lib/football.ts` y `AdSlot.tsx`.
   Toku, Fintoc, SimpliRoute, Xepelin, Rankmi) haya escalado vía automatización de LinkedIn,
   cold email masivo ni ads genéricos. El patrón verificable es founder-led sales +
   referidos + canal contador.
+
+---
+
+## D-005 — Descartar cobranza B2B automatizada
+
+- **Fecha:** 2026-08-14
+- **Estado:** DECIDIDA — descartar
+- **Razón:** el mercado ya resolvió el tramo automatizable y a precio muy inferior al
+  supuesto. **Xepelin regala** la gestión de cobros y pagos con recordatorios multicanal
+  (la subsidia con su negocio de factoring). **Bemmbo** cobra 3 UF/mes (~USD 115),
+  **Chipax** 2–3 UF/mes, y **Duemint** lleva desde 2017 en el nicho. El tramo NO
+  automatizable (mora dura: 56% del stock tiene +24 meses de atraso) lo capturan agencias
+  tradicionales con success fee de 3–19% del monto recuperado — un negocio de negociación
+  humana y vía judicial, no de software.
+- **Lo que sí quedó verificado:** Ley 21.131 obliga a pagar en 30 días corridos con mora e
+  interés automáticos; los pactos de plazo mayor deben inscribirse en un registro público
+  del Ministerio de Economía en 5 días hábiles o se tienen por no escritos.
+- **Matiz sin verificar:** si las restricciones de cobranza extrajudicial de la Ley 21.320
+  (máx. 2 contactos/semana) aplican al B2B. Modifican la Ley 19.496 (del *consumidor*), por
+  lo que probablemente no apliquen entre empresas — pero es **inferencia, no hecho
+  verificado**. Relevante si alguna vez se retoma este espacio.
+
+---
+
+## D-006 — Descartar control documental de contratistas
+
+- **Fecha:** 2026-08-14
+- **Estado:** DECIDIDA — descartar
+- **Razón:** el dolor es enorme y está brutalmente bien documentado — Ley 20.123 impone
+  responsabilidad **solidaria** al mandante; **Codelco cuantificó en US$ 28,4 millones/año**
+  el costo de sus tiempos de acreditación (27,5 días, meta de bajar a 10); Sernageomin
+  paralizó El Teniente por resolución tras seis fallecidos; hay >1.000 vacantes activas de
+  "control documental" en Computrabajo. **Pero la competencia es aplastante:** al menos
+  10–12 actores chilenos específicos (Trazit, Vigenty, Zerty, ControlDoc, Prevsis,
+  PreveSafe, FlowDocs, Validate, Verifty, Contratistas Online, Serres), más
+  **Avetta/Achilles** (multinacional que ya opera exactamente el modelo "el contratista
+  paga y comparte sus documentos con muchos mandantes"), más **SAP Ariba**, más **ACHS**
+  regalando un módulo a sus empresas afiliadas, más las grandes mineras construyendo
+  sistemas propios (Codelco). Varios competidores locales **ya usan IA** como
+  diferenciador — el mismo ángulo que usaríamos nosotros.
+- **Cuña que sí sobrevive (documentada, no elegida):** el lado **contratista PYME** y el
+  problema de fragmentación N-a-N (un mismo set de documentos recargado en el portal
+  propietario de cada mandante), hoy resuelto artesanalmente por servicios de outsourcing.
+  Se descarta igualmente por incompatibilidad con las restricciones del fundador (ver
+  D-007): vender a miles de PYMEs contratistas fragmentadas exige volumen comercial en
+  horario hábil.
+
+---
+
+## D-007 — Reencuadre por restricciones reales del fundador
+
+- **Fecha:** 2026-08-14
+- **Estado:** DECIDIDA — cambia el criterio de selección de toda oportunidad futura
+
+### Contexto nuevo (declarado por el fundador, no inferido)
+
+| Restricción | Valor |
+| --- | --- |
+| Capital disponible | **CLP 0** |
+| Empleo | Jornada completa, **lunes a viernes 08:00–17:30** |
+| Disponibilidad | Tardes-noches y fines de semana, online |
+| Red de contactos B2B | **Ninguna** |
+| Experiencia real | **Retail, e-commerce y logística** |
+| Conocidos con negocio | Dueños de PYME pequeñas (rubro belleza, p. ej. manicuristas) |
+| Situación | Urgencia de ingresos (bono comprometido de CLP 320.000 que no será pagado) |
+
+### Decisión
+
+Se **invalida el criterio de selección usado hasta ahora** y se agregan dos filtros
+eliminatorios que ninguna oportunidad puede saltarse:
+
+**Filtro 1 — El comprador debe ser alcanzable fuera del horario de oficina.**
+Un Gerente de Operaciones minero, un CFO o un Compliance Officer atienden entre 9 y 18 h.
+Un fundador que trabaja 08:00–17:30 **no puede venderles**. Esto elimina de raíz toda
+venta corporativa, sin importar cuán bueno sea el dolor. Sobreviven los
+**dueños-operadores**: sellers de e-commerce, PYMEs de servicios, comercios — gente que
+responde mensajes a las 21:00 porque el negocio es suyo.
+
+**Filtro 2 — Capital cero significa que el producto no puede preceder al ingreso.**
+No hay presupuesto para construir seis meses y después vender. La secuencia obligatoria es
+**vender primero, construir después**: servicio productizado operado manualmente con IA por
+debajo, que se convierte en software sólo cuando ya hay alguien pagando.
+
+### Consecuencia sobre las oportunidades ya investigadas
+
+Las seis analizadas (Ley 21.719, monitoreo SII, licitaciones, Ley Karin, cobranza,
+contratistas) **fallan el Filtro 1**: todas venden a cargos corporativos en horario hábil.
+Aunque alguna hubiera sobrevivido al análisis competitivo, habría muerto aquí.
+
+El único terreno que pasa ambos filtros y coincide con la experiencia real del fundador es
+**retail / e-commerce / logística, vendiendo a dueños-operadores**.
+
+### Sobre el objetivo de USD 10.000 MRR
+
+Se mantiene como objetivo, pero con horizonte honesto de **~22 meses** en el escenario
+realista (ver `docs/business/MODELO_FINANCIERO.md`), no de 3 a 6 meses. El hito operativo
+inmediato pasa a ser **un cliente pagando en 60 días**, que por sí solo reemplaza el bono
+perdido. Sostener lo contrario sería fabricar una proyección — el mismo defecto por el que
+se mató PRISM.

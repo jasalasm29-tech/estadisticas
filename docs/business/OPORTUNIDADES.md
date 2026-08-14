@@ -112,5 +112,56 @@ de entrada. Es exactamente el perfil que el mandato ordena descartar. **Eliminad
 
 Fuentes: vendify.cl, alertasmp.cl, licitados.cl, licitalab.cl, chilecompra.cl/api.
 
-Estado: quedan **#2 y #1** en validación por agentes dedicados. Sin alternativa de reserva
-en el top 3 — si ambas caen, se vuelve al top 10.
+### #2 Monitoreo SII de facturas — MUERTA (validada y descartada)
+
+El dolor y el marco legal se **confirmaron con evidencia dura**:
+- Plazo de **8 días corridos** (no hábiles), contados desde que el SII recibe el documento
+  (Circular N°4 del SII, 11-ene-2017).
+- Ley 19.983 (mérito ejecutivo) + Ley 20.956 (eliminó el acuse expreso). Al vencer el
+  plazo: aceptación irrevocable, mérito ejecutivo y habilitación para cesión a factoring,
+  perdiendo el deudor sus excepciones personales frente al cesionario.
+- Fraude real y documentado: hackeo de claves SII en La Araucanía (feb-2026) con 17
+  facturas falsas por ~CLP 200 millones cedidas a factoring; Antofagasta Minerals, CLP 373
+  millones en facturas falsas; Walmart vs. 10 factorings por 209 facturas cedidas.
+
+**Y aun así la oportunidad está muerta, por competencia.** La funcionalidad exacta ya se
+vende con ese nombre:
+
+| Actor | Producto |
+| --- | --- |
+| **Sovos** (multinacional de compliance fiscal, años en Chile) | Módulo **"Reclamaciones Factura"**: revisión y reclamo masivo con alertas y reglas preventivas dentro de la ventana de 8 días |
+| EasyTax | **"DTE Flow"**: acepta y reclama automáticamente según reglas, con auditoría antifraude |
+| Gosocket | Aceptación/rechazo/reclamo con registro directo en el SII |
+| Nubox | Notificaciones automáticas de documentos pendientes — **incluido** en su plan contable |
+| Defontana | Portal de proveedores con estado de aceptación/rechazo |
+
+El foso técnico también es cero: el acceso al RCV ya está comoditizado por SimpleAPI,
+ApiPyme, APISII y otros, y el SII ofrece el mecanismo de **representante electrónico**
+(delegación sin compartir clave tributaria), usado hace años por proveedores establecidos.
+
+Además, **no se encontró evidencia** de que exista un rol laboral dedicado a revisar
+facturas dentro del plazo de 8 días — señal de que hoy se resuelve como tarea rutinaria
+del área contable, no como dolor agudo que justifique una compra nueva.
+
+> Competir de frente contra una multinacional de compliance fiscal, con la feature
+> regalada dentro de los ERPs dominantes y sin foso técnico, no tiene tesis de entrada.
+> **Eliminada.**
+
+---
+
+## Estado del embudo
+
+| Oportunidad | Estado |
+| --- | --- |
+| #3 Licitaciones | ☠ Muerta — comoditizada, ticket USD 16–38 |
+| #2 Monitoreo SII facturas | ☠ Muerta — Sovos/EasyTax/Gosocket + incluida en ERPs |
+| #1 Ley 21.719 | ⏳ En Red Team |
+
+**Lección transversal que emerge de matar dos finalistas:** en Chile, casi toda *categoría
+de software* B2B evidente ya está servida. El patrón repetido es que los incumbentes venden
+**una herramienta**, mientras el cliente sigue sin tener **a la persona que la use** — la
+encuesta PwC lo muestra: 74% no tiene siquiera visibilidad de sus tratamientos de datos.
+La oportunidad, si existe, no es una categoría nueva: es un **servicio productizado** que
+entrega el trabajo hecho, con software y IA por debajo, en un espacio donde los tenedores
+del presupuesto hoy sólo pueden elegir entre una herramienta que no saben operar y una
+consultora que cobra precios de consultora.
