@@ -57,7 +57,56 @@ presupuesto, hay recurrencia mensual, y la solución actual es manual. Es el pat
   documentación incompleta. **Aquí está el número en pesos.**
 - **C3 — Ciclo mensual.** F30/F30-1 cada mes, control de exámenes y cursos vigentes.
 
-## Lo que NO está verificado (leer antes de invertir tiempo)
+## VERIFICACIÓN (2026-08-16) — la cuña C1 está ocupada
+
+Se verificaron los dos puntos abiertos. Ambos resultaron en contra.
+
+### Mine Pass / MINPASS existen y hacen exactamente esto
+
+- **Mine Pass** (mine-pass.com) — "acreditación minera y gestión documental para ingreso
+  a faena": acredita contratistas y trabajadores, control documental, cumplimiento y
+  onboarding automatizado. **Es parte de Mine Class**, empresa establecida con un
+  ecosistema propio (LMS, FaceID, SonIA, Mine Pass, VigIA), presentada en **Exponor 2026**
+  y con cobertura en Reporte Minero (junio 2026). Usa IA para automatizar procesos
+  documentales.
+- **MINPASS** (minpass.cl / minpass.com) — "pasaporte digital para la acreditación
+  minera": estandariza y digitaliza la acreditación de trabajadores y empresas contratistas
+  **ante cualquier minera**, con *"el trabajador como unidad mínima acreditable, con una
+  credencial segura y centralizada que el trabajador conserva y reutiliza"*.
+- **MyPass Global** — actor internacional de *mining workforce compliance*.
+
+La frase de MINPASS es, palabra por palabra, la hipótesis C1 de este documento. El
+problema de fragmentación N-a-N que se identificó como hueco **ya está siendo atacado con
+foco de producto por al menos dos actores**, uno de ellos respaldado por una empresa
+establecida del rubro con presencia en ferias.
+
+### El lado construcción tampoco está libre
+
+**Vigenty** (contratistas, subcontratistas, trabajadores, vehículos y maquinaria con
+documentos recurrentes) y **Foco en Obra** (solución integral para construcción, gestiona
+todo el proceso de acreditación) ya cubren el segmento no minero.
+
+### El ticket sí quedó validado — pero a favor del competidor
+
+**Mine Pass publica planes de USD 99, USD 349 y USD 699 al mes**, cotizados en Chile en
+**UF + IVA**, escalando por número de trabajadores y nivel de soporte.
+
+Esto confirma dos cosas a la vez:
+1. **El rango UF 5-9/mes era correcto.** Este mercado sí paga ese ticket. La suposición de
+   pricing estaba bien hecha.
+2. **Ese precio ya lo está cobrando otro**, con marca, presencia sectorial y producto vivo.
+
+### Conclusión
+
+La hipótesis de contratistas **no sobrevive para un operador con capital cero, jornada
+completa y sin red en minería**. No porque la idea sea mala — es buena, y el precio lo
+prueba — sino porque la pelea es contra un actor establecido, en una industria donde se
+vende en ferias y por relaciones, en horario hábil.
+
+Se documenta como **ocupada**, no como "mala idea". Si alguna vez cambian las
+restricciones del fundador (tiempo, capital, red en minería), vale reabrirla.
+
+## Lo que NO estaba verificado al escribir la hipótesis (histórico)
 
 Honestidad sobre el estado real de esta hipótesis:
 
