@@ -96,6 +96,39 @@ Esto confirma dos cosas a la vez:
    pricing estaba bien hecha.
 2. **Ese precio ya lo está cobrando otro**, con marca, presencia sectorial y producto vivo.
 
+### Datos de mercado (verificados después) — el mercado es MEJOR de lo que se creía
+
+| Dato | Valor | Fuente |
+| --- | --- | --- |
+| Trabajadores subcontratados en Chile | **1.071.128** (15,5% de los asalariados) | OCEC-UDP, jun-ago 2025 |
+| De ellos, categoría "contratistas/subcontratistas" | **701.587** | OCEC-UDP |
+| Tasa de subcontratación en minería | **55,8%** — la mayor de Chile | OCEC-UDP |
+| Empresas contratistas en **una sola** plataforma (Pronexo) | **8.646** | Pronexo |
+| Duración promedio de una acreditación | **38 días hábiles** (máx. 75) | CNEP |
+| Costo sectorial por día de demora | **~US$ 500.000 al año** | CNEP, vía mch.cl |
+| Onboarding manual por contratista | **5-9 horas** de trabajo administrativo | Trazit |
+
+**El sustituto humano cuesta mucho más que el software.** Vacantes reales de "Asistente de
+Acreditación Contratistas": **CLP 800.000 – 1.300.000/mes**, que cargado con leyes sociales
+son **CLP 1,0 – 1,7 millones/mes**. Hay 55 avisos activos de "encargado de acreditación" y
++1.000 de "analista de control documental", concentrados en Antofagasta, Calama y Puerto
+Montt. **Un servicio a UF 5-9/mes es 3 a 6 veces más barato que el sustituto actual.**
+
+### Corrección sobre el precio de Mine Pass
+
+Los planes de **USD 99 / 349 / 699** provienen de un **resumen de búsqueda, no de lectura
+directa de la página** (el proxy del entorno bloquea el fetch). La investigación dedicada
+encontró que **ningún competidor de la categoría publica tarifario**: FaenaControl,
+HomePymes, Acredix, Tazki, Vigenty, Zerty, ControlDoc, Pronexo y las variantes de MinPass
+operan todas con "cotiza aquí".
+
+→ El dato de Mine Pass **debe reverificarse antes de usarse para fijar precio**. Y la
+ausencia general de precios públicos es ambigua: puede significar que el ticket real es
+**más alto** (venta enterprise) o que el segmento pyme autoservicio **no está atendido**.
+
+**Acción de costo cero para resolverlo:** pedir cotización real como cliente a FaenaControl,
+HomePymes y Acredix. Convierte el proxy en precio de mercado verificado.
+
 ### Conclusión
 
 La hipótesis de contratistas **no sobrevive para un operador con capital cero, jornada
