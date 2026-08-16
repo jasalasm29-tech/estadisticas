@@ -50,23 +50,138 @@ export const ESTADOS_RESPONDIERON: Estado[] = [
 ];
 
 /**
- * Taxonomía de dolores. Las tres primeras son las hipótesis con evidencia
- * documentada (ver docs/sales/PLAN_VALIDACION_14_DIAS.md). Las demás existen
- * para capturar lo que no anticipamos — que es justamente lo más valioso.
+ * Segmentos que se prueban en paralelo. No son negocios distintos: son dos
+ * apuestas sobre dónde está el dolor pagable, y se testean con el mismo método.
  */
-export const DOLORES: { id: string; label: string; hipotesis?: string }[] = [
-  { id: "sync_marketplace", label: "Sincronización entre canales / marketplaces", hipotesis: "H1" },
-  { id: "quiebre_stock", label: "Quiebres de stock por desincronización", hipotesis: "H1" },
-  { id: "reclamos_courier", label: "Reclamos y post-entrega con el courier", hipotesis: "H2" },
-  { id: "seguimiento_despacho", label: "Seguimiento de despachos / pedidos atrasados", hipotesis: "H3" },
-  { id: "excel_manual", label: "Reportes y control en Excel a mano", hipotesis: "H3" },
-  { id: "atencion_whatsapp", label: "Atender consultas por WhatsApp/Instagram" },
-  { id: "publicar_productos", label: "Cargar y publicar productos en cada canal" },
-  { id: "devoluciones", label: "Gestión de devoluciones y cambios" },
-  { id: "precios_competencia", label: "Vigilar precios de la competencia" },
-  { id: "facturacion_dte", label: "Facturación / boletas / DTE" },
-  { id: "conciliar_pagos", label: "Conciliar pagos y liquidaciones del marketplace" },
-  { id: "otro", label: "Otro (anotar en notas)" },
+export type Segmento = "contratista" | "seller";
+
+export const SEGMENTOS: { id: Segmento; label: string; descripcion: string }[] = [
+  {
+    id: "contratista",
+    label: "Contratista pyme",
+    descripcion:
+      "Empresa chica que presta servicios a mandantes grandes (minería, construcción, industria) y debe acreditar papeles en el portal de cada uno.",
+  },
+  {
+    id: "seller",
+    label: "Seller e-commerce",
+    descripcion:
+      "Tienda online chilena que vende en uno o varios canales y despacha con couriers.",
+  },
+];
+
+/**
+ * Taxonomía de dolores por segmento.
+ *
+ * Contratista: derivados de la Ley 20.123 (responsabilidad solidaria del mandante),
+ * del F30-1 y de la acreditación para ingreso a faena. El competidor existe pero
+ * le vende al mandante grande; el lado pyme hoy se resuelve pagándole a alguien
+ * que suba los papeles a mano, portal por portal.
+ *
+ * Seller: derivados de la evidencia de fallas de sincronización de marketplaces
+ * y de la baja tasa de resolución de reclamos de los couriers.
+ *
+ * "otro" existe para capturar lo que no anticipamos, que suele ser lo más valioso.
+ */
+export const DOLORES: {
+  id: string;
+  label: string;
+  segmento: Segmento | "ambos";
+  hipotesis?: string;
+}[] = [
+  // — Contratista pyme —
+  {
+    id: "subir_papeles_portales",
+    label: "Subir los mismos papeles al portal de cada mandante",
+    segmento: "contratista",
+    hipotesis: "C1",
+  },
+  {
+    id: "vencimientos_docs",
+    label: "Documentos que se vencen sin que nadie avise",
+    segmento: "contratista",
+    hipotesis: "C1",
+  },
+  {
+    id: "trabajador_rechazado",
+    label: "Trabajador rechazado en portería por papeles",
+    segmento: "contratista",
+    hipotesis: "C2",
+  },
+  {
+    id: "pago_retenido",
+    label: "Pago retenido por el mandante por documentación incompleta",
+    segmento: "contratista",
+    hipotesis: "C2",
+  },
+  {
+    id: "f30_mensual",
+    label: "Sacar F30 / F30-1 todos los meses",
+    segmento: "contratista",
+    hipotesis: "C3",
+  },
+  {
+    id: "examenes_cursos",
+    label: "Controlar exámenes y cursos vigentes por trabajador",
+    segmento: "contratista",
+    hipotesis: "C3",
+  },
+  {
+    id: "cotizaciones_comprobantes",
+    label: "Juntar comprobantes de cotizaciones pagadas",
+    segmento: "contratista",
+  },
+
+  // — Seller e-commerce —
+  {
+    id: "sync_marketplace",
+    label: "Sincronización entre canales / marketplaces",
+    segmento: "seller",
+    hipotesis: "S1",
+  },
+  {
+    id: "quiebre_stock",
+    label: "Quiebres de stock por desincronización",
+    segmento: "seller",
+    hipotesis: "S1",
+  },
+  {
+    id: "reclamos_courier",
+    label: "Reclamos y post-entrega con el courier",
+    segmento: "seller",
+    hipotesis: "S2",
+  },
+  {
+    id: "seguimiento_despacho",
+    label: "Seguimiento de despachos / pedidos atrasados",
+    segmento: "seller",
+    hipotesis: "S3",
+  },
+  {
+    id: "publicar_productos",
+    label: "Cargar y publicar productos en cada canal",
+    segmento: "seller",
+  },
+  {
+    id: "devoluciones",
+    label: "Gestión de devoluciones y cambios",
+    segmento: "seller",
+  },
+  {
+    id: "conciliar_pagos",
+    label: "Conciliar pagos y liquidaciones del marketplace",
+    segmento: "seller",
+  },
+
+  // — Transversales —
+  { id: "excel_manual", label: "Reportes y control en Excel a mano", segmento: "ambos" },
+  {
+    id: "atencion_whatsapp",
+    label: "Atender consultas por WhatsApp",
+    segmento: "ambos",
+  },
+  { id: "facturacion_dte", label: "Facturación / boletas / DTE", segmento: "ambos" },
+  { id: "otro", label: "Otro (anotar en notas)", segmento: "ambos" },
 ];
 
 export interface Entrevista {
@@ -87,6 +202,7 @@ export interface Entrevista {
 
 export interface Prospecto {
   id: string;
+  segmento: Segmento;
   nombre: string;
   tienda: string;
   canales: string;
@@ -134,10 +250,59 @@ export const PREGUNTAS: { campo: keyof Entrevista; texto: string; nota?: string 
  * La salida explícita no es sólo cortesía — es lo que exige la Ley 19.628 hoy
  * y lo que la Ley 21.719 endurecerá desde el 1 de diciembre de 2026.
  */
-export const PLANTILLAS: { id: string; canal: string; texto: string }[] = [
+export const PLANTILLAS: {
+  id: string;
+  canal: string;
+  segmento: Segmento | "ambos";
+  texto: string;
+}[] = [
+  // — Contratista pyme —
+  {
+    id: "c_whatsapp",
+    canal: "WhatsApp / llamada",
+    segmento: "contratista",
+    texto: `Hola {nombre}, ¿cómo estás? Te escribo por {tienda}.
+
+Trabajo en logística y estoy investigando cómo llevan los papeles las empresas que prestan servicios a mandantes grandes: la acreditación, el F30-1, los exámenes de los trabajadores.
+
+Una sola pregunta: ¿cuánto tiempo al mes se te va subiendo documentos a los portales de tus mandantes?
+
+No te vendo nada, es investigación. Si no quieres que te escriba, me dices y listo.`,
+  },
+  {
+    id: "c_email",
+    canal: "Correo",
+    segmento: "contratista",
+    texto: `Asunto: cómo llevan la acreditación en {tienda}
+
+Hola {nombre},
+
+Estoy investigando cómo las empresas contratistas chilenas manejan la documentación que les exigen sus mandantes: F30-1, exámenes ocupacionales, cursos, comprobantes de cotizaciones.
+
+No vendo nada todavía. Quiero entender una cosa: ¿cuántas horas al mes se les va subiendo los mismos papeles a portales distintos?
+
+Si me respondes aunque sea en una línea, me ayudas mucho.
+
+Si no quiere recibir más correos míos, respóndame "baja" y no le vuelvo a escribir.
+
+{firma}`,
+  },
+  {
+    id: "c_dolor",
+    canal: "Apertura por dolor concreto",
+    segmento: "contratista",
+    texto: `Hola {nombre}, una consulta corta sobre {tienda}.
+
+¿Les ha pasado que un trabajador no puede entrar a faena porque se venció un examen o un curso, y nadie se dio cuenta antes?
+
+Estoy investigando qué tan seguido pasa eso y cuánto cuesta. No te vendo nada.`,
+  },
+
+  // — Seller e-commerce —
   {
     id: "dm",
     canal: "Instagram / DM",
+    segmento: "seller",
     texto: `Hola {nombre}, vi {tienda} y que venden en {canales} hace tiempo.
 
 Trabajo en logística y e-commerce y estoy investigando qué es lo que más tiempo les quita a los que venden en varios canales a la vez.
@@ -149,6 +314,7 @@ No te estoy vendiendo nada, estoy investigando. Si prefieres que no te escriba m
   {
     id: "email",
     canal: "Correo",
+    segmento: "seller",
     texto: `Asunto: una pregunta sobre cómo operan en {tienda}
 
 Hola {nombre},
@@ -166,6 +332,7 @@ Si no quieres recibir más correos míos, respóndeme "baja" y no te vuelvo a es
   {
     id: "whatsapp",
     canal: "WhatsApp",
+    segmento: "seller",
     texto: `Hola {nombre}, ¿cómo estás? Te escribo por {tienda}.
 
 Trabajo en logística y e-commerce y estoy investigando qué les quita más tiempo a los que venden en {canales}.
@@ -177,6 +344,7 @@ No te vendo nada, es investigación. Si no quieres que te escriba, me dices y li
   {
     id: "seguimiento",
     canal: "Seguimiento (a los 4 días)",
+    segmento: "ambos",
     texto: `Hola {nombre}, te escribí hace unos días sobre lo que más tiempo les quita operando en {canales}.
 
 Sé que andas ocupado. Si me tiras una sola frase con lo más molesto de tu semana, me sirve igual.
@@ -186,6 +354,7 @@ Y si no es tu tema, no hay problema, no te escribo más.`,
   {
     id: "oferta",
     canal: "Oferta de piloto (día 13-14)",
+    segmento: "ambos",
     texto: `{nombre}, me quedé pensando en lo que me contaste sobre {dolor}.
 
 Eso lo puedo resolver. Te lo dejo funcionando en 2 semanas.
@@ -196,9 +365,10 @@ El primer mes son UF 3 y si no te sirve, no sigues. Después son UF 6 al mes.
   },
 ];
 
-export function prospectoVacio(): Prospecto {
+export function prospectoVacio(segmento: Segmento = "contratista"): Prospecto {
   return {
     id: crypto.randomUUID(),
+    segmento,
     nombre: "",
     tienda: "",
     canales: "",
@@ -228,7 +398,11 @@ export function cargar(): Prospecto[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Prospecto[]) : [];
+    if (!raw) return [];
+    const datos = JSON.parse(raw) as Prospecto[];
+    // Los prospectos guardados antes de que existieran los segmentos no traen
+    // el campo. Se asumen sellers, que era el único segmento en ese momento.
+    return datos.map((p) => ({ ...p, segmento: p.segmento ?? "seller" }));
   } catch {
     return [];
   }

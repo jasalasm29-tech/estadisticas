@@ -11,6 +11,8 @@ import {
   PLANTILLAS,
   PREGUNTAS,
   Prospecto,
+  SEGMENTOS,
+  Segmento,
   UMBRAL_DOLOR,
   calcularMetricas,
   cargar,
@@ -46,8 +48,8 @@ export default function ValidacionPage() {
     );
   }
 
-  function agregar() {
-    const nuevo = prospectoVacio();
+  function agregar(segmento: Segmento) {
+    const nuevo = prospectoVacio(segmento);
     setProspectos((prev) => [nuevo, ...prev]);
     setSeleccionado(nuevo.id);
     setTab("prospectos");
@@ -116,9 +118,16 @@ export default function ValidacionPage() {
         ))}
         <div className="ml-auto flex gap-2">
           <ExportarImportar prospectos={prospectos} onImportar={setProspectos} />
-          <button onClick={agregar} className="btn-primary px-4 py-2 text-sm">
-            + Prospecto
-          </button>
+          {SEGMENTOS.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => agregar(s.id)}
+              className="btn-primary px-4 py-2 text-sm"
+              title={s.descripcion}
+            >
+              + {s.label}
+            </button>
+          ))}
         </div>
       </nav>
 
@@ -267,6 +276,9 @@ function ListaProspectos({
                     {estado.label}
                   </span>
                 </div>
+                <p className="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-gray-400">
+                  {SEGMENTOS.find((s) => s.id === p.segmento)?.label}
+                </p>
                 {p.canales && (
                   <p className="mt-1 text-xs text-gray-500">{p.canales}</p>
                 )}
@@ -294,12 +306,20 @@ function DetalleProspecto({
   onCambio: (cambios: Partial<Prospecto>) => void;
   onEliminar: () => void;
 }) {
-  const [plantilla, setPlantilla] = useState(PLANTILLAS[0].id);
+  const plantillas = PLANTILLAS.filter(
+    (t) => t.segmento === prospecto.segmento || t.segmento === "ambos"
+  );
+  const dolores = DOLORES.filter(
+    (d) => d.segmento === prospecto.segmento || d.segmento === "ambos"
+  );
+
+  const [plantilla, setPlantilla] = useState(plantillas[0].id);
   const [copiado, setCopiado] = useState(false);
 
-  const tpl = PLANTILLAS.find((t) => t.id === plantilla)!;
+  const tpl = plantillas.find((t) => t.id === plantilla) ?? plantillas[0];
   const dolorPrincipal =
     DOLORES.find((d) => d.id === prospecto.dolores[0])?.label ?? "…";
+  const seg = SEGMENTOS.find((s) => s.id === prospecto.segmento)!;
   const mensaje = renderPlantilla(tpl.texto, prospecto, {
     dolor: dolorPrincipal,
   });
@@ -323,6 +343,13 @@ function DetalleProspecto({
 
   return (
     <div className="glass space-y-6 p-5">
+      <div className="rounded-xl bg-gray-50 px-3 py-2">
+        <span className="text-xs font-semibold uppercase tracking-wide text-google-blue">
+          {seg.label}
+        </span>
+        <p className="mt-0.5 text-xs text-gray-500">{seg.descripcion}</p>
+      </div>
+
       <div className="grid gap-3 sm:grid-cols-2">
         <Campo
           label="Persona"
@@ -331,16 +358,24 @@ function DetalleProspecto({
           placeholder="Nombre de pila"
         />
         <Campo
-          label="Tienda"
+          label="Empresa"
           value={prospecto.tienda}
           onChange={(v) => onCambio({ tienda: v })}
           placeholder="Nombre del negocio"
         />
         <Campo
-          label="Canales donde vende"
+          label={
+            prospecto.segmento === "contratista"
+              ? "Mandantes a los que presta servicios"
+              : "Canales donde vende"
+          }
           value={prospecto.canales}
           onChange={(v) => onCambio({ canales: v })}
-          placeholder="MercadoLibre, Shopify, Falabella"
+          placeholder={
+            prospecto.segmento === "contratista"
+              ? "Codelco, Anglo American, constructora X"
+              : "MercadoLibre, Shopify, Falabella"
+          }
         />
         <Campo
           label="Contacto"
@@ -391,7 +426,7 @@ function DetalleProspecto({
             onChange={(e) => setPlantilla(e.target.value)}
             className="rounded-lg border border-gray-300 px-2 py-1 text-xs"
           >
-            {PLANTILLAS.map((t) => (
+            {plantillas.map((t) => (
               <option key={t.id} value={t.id}>
                 {t.canal}
               </option>
@@ -418,7 +453,7 @@ function DetalleProspecto({
           Dolores que mencionó
         </h3>
         <div className="flex flex-wrap gap-2">
-          {DOLORES.map((d) => {
+          {dolores.map((d) => {
             const activo = prospecto.dolores.includes(d.id);
             return (
               <button
@@ -659,6 +694,11 @@ function Guia() {
             <div key={t.id}>
               <h3 className="mb-1 text-sm font-semibold text-google-blue">
                 {t.canal}
+                <span className="ml-2 font-normal text-gray-400">
+                  {t.segmento === "ambos"
+                    ? "· ambos segmentos"
+                    : `· ${SEGMENTOS.find((s) => s.id === t.segmento)?.label}`}
+                </span>
               </h3>
               <pre className="whitespace-pre-wrap rounded-xl bg-gray-50 p-3 text-xs text-gray-700">
                 {t.texto}
