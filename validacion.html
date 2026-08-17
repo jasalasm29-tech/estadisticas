@@ -1,0 +1,816 @@
+<title>Cuaderno de Validación</title>
+<style>
+  /* ─── Tokens: paleta clara completa ─────────────────────────────────────── */
+  :root {
+    --ground:      #f4f2ed;
+    --surface:     #fbfaf7;
+    --surface-2:   #eeebe3;
+    --ink:         #1a1c1a;
+    --ink-soft:    #5c5f59;
+    --ink-faint:   #8b8e86;
+    --rule:        #d9d5ca;
+    --rule-strong: #bfbaab;
+    --accent:      #1f5c4d;
+    --accent-soft: #e0eae5;
+    --signal:      #a34a1c;
+    --signal-soft: #f6e6dc;
+    --good:        #2f6f45;
+    --good-soft:   #dfeee3;
+    --mark:        #6b4b8a;
+    --mark-soft:   #ece5f3;
+
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #14161a;
+      --surface:     #1b1e23;
+      --surface-2:   #23272e;
+      --ink:         #e8e6e0;
+      --ink-soft:    #a3a69f;
+      --ink-faint:   #74776f;
+      --rule:        #2e333a;
+      --rule-strong: #414751;
+      --accent:      #6fbfa5;
+      --accent-soft: #1a2f2a;
+      --signal:      #e08a53;
+      --signal-soft: #2e1f16;
+      --good:        #6aba84;
+      --good-soft:   #17261c;
+      --mark:        #b294d0;
+      --mark-soft:   #241c2e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #14161a;
+    --surface:     #1b1e23;
+    --surface-2:   #23272e;
+    --ink:         #e8e6e0;
+    --ink-soft:    #a3a69f;
+    --ink-faint:   #74776f;
+    --rule:        #2e333a;
+    --rule-strong: #414751;
+    --accent:      #6fbfa5;
+    --accent-soft: #1a2f2a;
+    --signal:      #e08a53;
+    --signal-soft: #2e1f16;
+    --good:        #6aba84;
+    --good-soft:   #17261c;
+    --mark:        #b294d0;
+    --mark-soft:   #241c2e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 80px; }
+
+  /* ─── Cabecera ──────────────────────────────────────────────────────────── */
+  header.top { border-bottom: 2px solid var(--ink); padding-bottom: 14px; margin-bottom: 0; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-faint); margin: 0 0 6px;
+  }
+  h1 { font-size: 28px; line-height: 1.15; margin: 0; letter-spacing: -.02em; text-wrap: balance; }
+  .lede { margin: 10px 0 0; max-width: 62ch; color: var(--ink-soft); font-size: 14.5px; }
+
+  /* ─── Instrumentos ──────────────────────────────────────────────────────── */
+  .instruments {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    border-bottom: 1px solid var(--rule);
+  }
+  .inst { padding: 14px 14px 12px; border-right: 1px solid var(--rule); }
+  .inst:last-child { border-right: 0; }
+  .inst-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-faint); margin: 0 0 4px;
+  }
+  .inst-value {
+    font-family: var(--mono); font-size: 26px; font-weight: 600;
+    font-variant-numeric: tabular-nums; line-height: 1; margin: 0;
+  }
+  .inst-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin: 4px 0 0; }
+  .inst.hit .inst-value { color: var(--good); }
+  .inst.hit { background: var(--good-soft); }
+
+  @media (max-width: 720px) {
+    .instruments { grid-template-columns: repeat(2, 1fr); }
+    .inst { border-bottom: 1px solid var(--rule); }
+  }
+
+  /* ─── Alertas ───────────────────────────────────────────────────────────── */
+  .alert {
+    background: var(--signal-soft); border-left: 3px solid var(--signal);
+    padding: 12px 14px; margin-top: 16px; font-size: 13.5px;
+  }
+  .alert b { color: var(--signal); }
+
+  /* ─── Barra de acción ───────────────────────────────────────────────────── */
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 20px 0 18px; }
+  .bar .spacer { margin-left: auto; }
+
+  button {
+    font: inherit; font-size: 13px; cursor: pointer; border-radius: 2px;
+    border: 1px solid var(--rule-strong); background: var(--surface);
+    color: var(--ink); padding: 7px 13px; transition: background .12s, border-color .12s;
+  }
+  button:hover { border-color: var(--ink-soft); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.tab[aria-selected="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+  button.solid { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600; }
+  :root[data-theme="dark"] button.solid,
+  :root:not([data-theme="light"]) button.solid { color: #10201b; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) button.solid { color: #f4fbf8; } }
+  button.solid:hover { filter: brightness(1.08); }
+  button.quiet { border-color: transparent; background: transparent; color: var(--ink-faint); padding: 4px 0; }
+  button.quiet:hover { color: var(--signal); }
+
+  /* ─── Espacio de trabajo ────────────────────────────────────────────────── */
+  .work { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 18px; align-items: start; }
+  @media (max-width: 900px) { .work { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--surface); border: 1px solid var(--rule); }
+  .panel-pad { padding: 16px; }
+
+  /* ─── Libro de prospectos ───────────────────────────────────────────────── */
+  .ledger { max-height: 620px; overflow-y: auto; }
+  .row {
+    display: block; width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--rule);
+    background: transparent; padding: 11px 14px; border-radius: 0;
+  }
+  .row:hover { background: var(--surface-2); }
+  .row[aria-current="true"] { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  .row-top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .row-name { font-weight: 600; font-size: 14px; }
+  .row-seg {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-faint); margin-top: 2px;
+  }
+  .row-sub { font-size: 12px; color: var(--ink-soft); margin-top: 3px; }
+
+  .chip {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 2px; white-space: nowrap; background: var(--surface-2); color: var(--ink-soft);
+  }
+  .chip.c-contactado { background: var(--accent-soft); color: var(--accent); }
+  .chip.c-respondio  { background: var(--signal-soft); color: var(--signal); }
+  .chip.c-entrevistado { background: var(--mark-soft); color: var(--mark); }
+  .chip.c-piloto     { background: var(--signal-soft); color: var(--signal); }
+  .chip.c-pagando    { background: var(--good); color: var(--surface); font-weight: 700; }
+  .chip.c-descartado { color: var(--ink-faint); }
+
+  /* ─── Formulario ────────────────────────────────────────────────────────── */
+  .seg-head { background: var(--surface-2); padding: 10px 14px; border-bottom: 1px solid var(--rule); }
+  .seg-head strong {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .seg-head p { margin: 3px 0 0; font-size: 12.5px; color: var(--ink-soft); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
+
+  label.f { display: block; }
+  label.f > span {
+    display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: 4px;
+  }
+  input, select, textarea {
+    font: inherit; font-size: 14px; width: 100%; padding: 7px 9px;
+    background: var(--ground); color: var(--ink);
+    border: 1px solid var(--rule); border-radius: 2px;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+  textarea { resize: vertical; }
+
+  section.block { border-top: 1px solid var(--rule); padding: 16px; }
+  section.block > h3 {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 0 0 10px; font-weight: 600;
+  }
+
+  pre.msg {
+    font-family: var(--sans); font-size: 13.5px; line-height: 1.55; white-space: pre-wrap;
+    background: var(--ground); border: 1px solid var(--rule); padding: 12px; margin: 0 0 10px;
+  }
+  .hint { font-size: 12px; color: var(--ink-faint); margin: 8px 0 0; }
+
+  .pains { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pain {
+    font-size: 12px; padding: 4px 10px; border-radius: 999px;
+    border: 1px solid var(--rule-strong); background: transparent; color: var(--ink-soft);
+  }
+  .pain[aria-pressed="true"] { background: var(--mark-soft); border-color: var(--mark); color: var(--mark); font-weight: 600; }
+  .pain .h { font-family: var(--mono); font-size: 10px; opacity: .65; margin-right: 4px; }
+
+  .q { margin-bottom: 14px; }
+  .q p { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+  .q .note { font-weight: 400; font-size: 12px; color: var(--signal); margin: 0 0 5px; }
+
+  /* ─── Patrón ────────────────────────────────────────────────────────────── */
+  .rank { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .rank-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; font-size: 13.5px; }
+  .rank-n { font-family: var(--mono); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .rank-track { height: 6px; background: var(--surface-2); margin-top: 5px; }
+  .rank-fill { height: 100%; background: var(--rule-strong); }
+  .rank-fill.hit { background: var(--good); }
+  .rank li.hit .rank-n { color: var(--good); }
+
+  .big-money { font-family: var(--mono); font-size: 34px; font-weight: 600; color: var(--good); margin: 0; font-variant-numeric: tabular-nums; }
+
+  .steps { padding-left: 18px; margin: 0; }
+  .steps li { margin-bottom: 7px; font-size: 14px; }
+  .tmpl { margin-bottom: 18px; }
+  .tmpl h4 { margin: 0 0 5px; font-size: 12px; font-family: var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .tmpl h4 span { color: var(--ink-faint); font-weight: 400; }
+
+  .empty { padding: 48px 20px; text-align: center; color: var(--ink-faint); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Chile · 14 días · presupuesto CLP 0</p>
+    <h1>Cuaderno de Validación</h1>
+    <p class="lede">
+      Esto no construye producto. Sirve para descubrir si existe un dolor por el que
+      alguien pague. Cinco mensajes por noche; al día 14 hay una decisión.
+    </p>
+  </header>
+
+  <div class="instruments" id="instruments"></div>
+  <div id="alertas"></div>
+
+  <nav class="bar">
+    <button class="tab" data-tab="prospectos" aria-selected="true">Prospectos</button>
+    <button class="tab" data-tab="patron" aria-selected="false">Patrón de dolores</button>
+    <button class="tab" data-tab="guia" aria-selected="false">Guion y mensajes</button>
+    <span class="spacer"></span>
+    <button id="btn-export">Respaldar</button>
+    <button id="btn-import">Restaurar</button>
+    <button class="solid" data-add="seller">+ Seller e-commerce</button>
+    <button class="solid" data-add="contratista">+ Contratista pyme</button>
+  </nav>
+
+  <div class="panel panel-pad" id="respaldo-box" hidden style="margin-bottom:18px">
+    <h3 style="margin:0 0 4px;font-size:15px">Respaldo</h3>
+    <p style="margin:0 0 10px;color:var(--ink-soft);font-size:13px;max-width:62ch">
+      Pega aquí un respaldo anterior para restaurarlo, o copia este texto y gu&aacute;rdalo
+      donde quieras (un correo a ti mismo sirve).
+    </p>
+    <textarea id="respaldo" rows="6" style="font-family:var(--mono);font-size:12px"></textarea>
+    <p style="margin:10px 0 0;display:flex;gap:8px">
+      <button class="solid" id="btn-restaurar">Restaurar desde este texto</button>
+      <button id="btn-cerrar-respaldo">Cerrar</button>
+    </p>
+  </div>
+
+  <div id="view"></div>
+</div>
+
+<script>
+"use strict";
+
+const KEY = "cuaderno.validacion.v1";
+const META_LISTA = 60, META_CONV = 40, UMBRAL = 8;
+
+const CLP = new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 });
+
+const SEGMENTOS = [
+  { id: "seller", label: "Seller e-commerce",
+    desc: "Tienda online chilena que vende en uno o varios canales y despacha con couriers." },
+  { id: "contratista", label: "Contratista pyme",
+    desc: "Empresa chica que presta servicios a mandantes grandes y acredita papeles en el portal de cada uno." },
+];
+
+const ESTADOS = [
+  { id: "por_contactar", label: "Por contactar" },
+  { id: "contactado",    label: "Contactado" },
+  { id: "respondio",     label: "Respondió" },
+  { id: "entrevistado",  label: "Entrevistado" },
+  { id: "piloto",        label: "Piloto ofrecido" },
+  { id: "pagando",       label: "Pagando" },
+  { id: "descartado",    label: "Descartado" },
+];
+const CONTACTADOS  = ["contactado","respondio","entrevistado","piloto","pagando"];
+const RESPONDIERON = ["respondio","entrevistado","piloto","pagando"];
+
+const DOLORES = [
+  { id:"sync_marketplace",   seg:"seller", h:"S1", label:"Sincronización entre canales" },
+  { id:"quiebre_stock",      seg:"seller", h:"S1", label:"Quiebres de stock por desincronización" },
+  { id:"reclamos_courier",   seg:"seller", h:"S2", label:"Reclamos y post-entrega con el courier" },
+  { id:"seguimiento_desp",   seg:"seller", h:"S3", label:"Seguimiento de despachos atrasados" },
+  { id:"publicar_productos", seg:"seller", label:"Cargar productos en cada canal" },
+  { id:"devoluciones",       seg:"seller", label:"Devoluciones y cambios" },
+  { id:"conciliar_pagos",    seg:"seller", label:"Conciliar liquidaciones del marketplace" },
+
+  { id:"subir_papeles",   seg:"contratista", h:"C1", label:"Subir los mismos papeles a cada portal" },
+  { id:"vencimientos",    seg:"contratista", h:"C1", label:"Documentos que vencen sin aviso" },
+  { id:"rechazo_porteria",seg:"contratista", h:"C2", label:"Trabajador rechazado en portería" },
+  { id:"pago_retenido",   seg:"contratista", h:"C2", label:"Pago retenido por papeles incompletos" },
+  { id:"f30",             seg:"contratista", h:"C3", label:"Sacar F30 / F30-1 cada mes" },
+  { id:"examenes",        seg:"contratista", h:"C3", label:"Controlar exámenes y cursos vigentes" },
+  { id:"cotizaciones",    seg:"contratista", label:"Juntar comprobantes de cotizaciones" },
+
+  { id:"excel_manual",     seg:"ambos", label:"Reportes y control en Excel a mano" },
+  { id:"atencion_whatsapp",seg:"ambos", label:"Atender consultas por WhatsApp" },
+  { id:"facturacion",      seg:"ambos", label:"Facturación / boletas / DTE" },
+  { id:"otro",             seg:"ambos", label:"Otro (anotar en notas)" },
+];
+
+const PREGUNTAS = [
+  { k:"r1", t:"Cuéntame tu semana. ¿Qué haces todos los días que preferirías no hacer?" },
+  { k:"r2", t:"¿Cuál fue la última vez que perdiste una venta o plata por un tema operacional? ¿Cuánto fue?",
+    nota:"La pregunta clave. Un dolor con monto en pesos se puede cobrar. Sin monto, es una molestia." },
+  { k:"r3", t:"¿Qué herramientas pagas hoy y cuánto? ¿Qué sigues haciendo a mano pese a pagarlas?",
+    nota:"Aquí aparece el hueco que dejan los competidores." },
+  { k:"r4", t:"Si pudieras contratar a alguien 4 horas a la semana sólo para una tarea, ¿cuál sería?" },
+  { k:"r5", t:"¿Buscaste una herramienta para eso y no existía, o la encontraste y no te sirvió? ¿Por qué?" },
+];
+
+const PLANTILLAS = [
+  { id:"dm", seg:"seller", canal:"Instagram / DM", texto:
+`Hola {nombre}, vi {negocio} y que venden en {canales} hace tiempo.
+
+Trabajo en logística y e-commerce y estoy investigando qué es lo que más tiempo les quita a los que venden en varios canales a la vez.
+
+¿Te puedo hacer una sola pregunta? ¿Qué cosa haces todas las semanas a mano que sientes que debería estar automatizada?
+
+No te estoy vendiendo nada, estoy investigando. Si prefieres que no te escriba más, dímelo y listo.` },
+
+  { id:"wa", seg:"seller", canal:"WhatsApp", texto:
+`Hola {nombre}, ¿cómo estás? Te escribo por {negocio}.
+
+Trabajo en logística y e-commerce y estoy investigando qué les quita más tiempo a los que venden en {canales}.
+
+Una sola pregunta: ¿qué haces todas las semanas a mano que debería estar automatizado?
+
+No te vendo nada, es investigación. Si no quieres que te escriba, me dices y listo.` },
+
+  { id:"mail", seg:"seller", canal:"Correo", texto:
+`Asunto: una pregunta sobre cómo operan en {negocio}
+
+Hola {nombre},
+
+Trabajo en logística y e-commerce en Chile y estoy investigando qué procesos siguen siendo manuales para quienes venden en {canales}.
+
+No vendo nada todavía. Sólo quiero entender una cosa: ¿qué tarea repites cada semana a mano que crees que debería estar automatizada?
+
+Si me respondes aunque sea en una línea, me ayudas mucho.
+
+Si no quieres recibir más correos míos, respóndeme "baja" y no te vuelvo a escribir.` },
+
+  { id:"c_wa", seg:"contratista", canal:"WhatsApp", texto:
+`Hola {nombre}, ¿cómo estás? Te escribo por {negocio}.
+
+Trabajo en logística y estoy investigando cómo llevan los papeles las empresas que prestan servicios a mandantes grandes: la acreditación, el F30-1, los exámenes de los trabajadores.
+
+Una sola pregunta: ¿cuánto tiempo al mes se te va subiendo documentos a los portales de tus mandantes?
+
+No te vendo nada, es investigación. Si no quieres que te escriba, me dices y listo.` },
+
+  { id:"c_dolor", seg:"contratista", canal:"Apertura por dolor", texto:
+`Hola {nombre}, una consulta corta sobre {negocio}.
+
+¿Les ha pasado que un trabajador no puede entrar a faena porque se venció un examen o un curso, y nadie se dio cuenta antes?
+
+Estoy investigando qué tan seguido pasa eso y cuánto cuesta. No te vendo nada.` },
+
+  { id:"seg", seg:"ambos", canal:"Seguimiento (a los 4 días)", texto:
+`Hola {nombre}, te escribí hace unos días sobre lo que más tiempo les quita la operación del día a día.
+
+Sé que andas ocupado. Si me tiras una sola frase con lo más molesto de tu semana, me sirve igual.
+
+Y si no es tu tema, no hay problema, no te escribo más.` },
+
+  { id:"oferta", seg:"ambos", canal:"Oferta de piloto (día 13-14)", texto:
+`{nombre}, me quedé pensando en lo que me contaste sobre {dolor}.
+
+Eso lo puedo resolver. Te lo dejo funcionando en 2 semanas.
+
+El primer mes son UF 3 y si no te sirve, no sigues. Después son UF 6 al mes.
+
+¿Lo hacemos?` },
+];
+
+// ─── Estado ───────────────────────────────────────────────────────────────
+let datos = [];
+let sel = null;
+let tab = "prospectos";
+let filtro = "todos";
+
+function cargar() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    datos = raw ? JSON.parse(raw) : [];
+  } catch { datos = []; }
+}
+function guardar() {
+  try { localStorage.setItem(KEY, JSON.stringify(datos)); } catch {}
+}
+function uid() {
+  return (crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now() + Math.random());
+}
+function nuevo(seg) {
+  return { id: uid(), seg, nombre:"", negocio:"", canales:"", contacto:"", fuente:"",
+           estado:"por_contactar", fecha:null, dolores:[], notas:"", entrevista:null };
+}
+function nuevaEntrevista() {
+  return { r1:"", r2:"", r3:"", r4:"", r5:"", monto:null };
+}
+function actual() { return datos.find(p => p.id === sel) || null; }
+
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+    ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+}
+
+// ─── Métricas ─────────────────────────────────────────────────────────────
+function metricas() {
+  const total = datos.length;
+  const contactados = datos.filter(p => CONTACTADOS.includes(p.estado)).length;
+  const respondieron = datos.filter(p => RESPONDIERON.includes(p.estado)).length;
+  const entrevistados = datos.filter(p => p.entrevista).length;
+  const pilotos = datos.filter(p => p.estado === "piloto").length;
+  const pagando = datos.filter(p => p.estado === "pagando").length;
+  const tasa = contactados ? (respondieron / contactados) * 100 : 0;
+  const monto = datos.reduce((a, p) => a + ((p.entrevista && p.entrevista.monto) || 0), 0);
+
+  const cuenta = {};
+  datos.forEach(p => (p.dolores || []).forEach(d => cuenta[d] = (cuenta[d] || 0) + 1));
+  const ranking = DOLORES.map(d => ({ ...d, n: cuenta[d.id] || 0 }))
+    .filter(d => d.n > 0).sort((a, b) => b.n - a.n);
+
+  // Criterios de muerte, definidos antes de empezar. Se evalúan solos para que
+  // la decisión no dependa del ánimo del día.
+  const alertas = [];
+  if (contactados >= META_CONV && tasa < 10)
+    alertas.push(`Tasa de respuesta ${tasa.toFixed(1)}% con ${contactados} contactados. El canal o el mensaje están mal: cambia el canal antes que el producto.`);
+  if (entrevistados >= 5 && pilotos === 0 && pagando === 0)
+    alertas.push(`${entrevistados} entrevistas y 0 pilotos ofrecidos. Si hay interés pero nadie quiere pagar, es molestia y no problema: cambia la hipótesis.`);
+  if (entrevistados >= 20 && ranking.every(d => d.n < UMBRAL))
+    alertas.push(`Ningún dolor supera ${UMBRAL} menciones con ${entrevistados} entrevistas. No hay patrón: hay que cambiar de hipótesis.`);
+  if (pilotos >= 3 && pagando === 0)
+    alertas.push(`${pilotos} pilotos ofrecidos y 0 pagando. Revisa el precio o el cierre, no el producto.`);
+
+  return { total, contactados, respondieron, entrevistados, pilotos, pagando, tasa, monto, ranking, alertas };
+}
+
+function render() {
+  const m = metricas();
+
+  document.getElementById("instruments").innerHTML = [
+    { l:"En lista",     v:m.total,        s:`de ${META_LISTA}` },
+    { l:"Contactados",  v:m.contactados,  s:`de ${META_CONV}` },
+    { l:"Tasa respuesta", v:m.tasa.toFixed(0)+"%", s:"mínimo 10%" },
+    { l:"Entrevistas",  v:m.entrevistados, s:"" },
+    { l:"Pagando",      v:m.pagando,      s:"meta: 1", hit:m.pagando > 0 },
+  ].map(i => `
+    <div class="inst${i.hit ? " hit" : ""}">
+      <p class="inst-label">${i.l}</p>
+      <p class="inst-value">${i.v}</p>
+      ${i.s ? `<p class="inst-meta">${i.s}</p>` : ""}
+    </div>`).join("");
+
+  document.getElementById("alertas").innerHTML = m.alertas
+    .map(a => `<div class="alert"><b>Criterio de muerte activado.</b> ${esc(a)}</div>`).join("");
+
+  document.querySelectorAll("button.tab").forEach(b =>
+    b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
+
+  const view = document.getElementById("view");
+  if (tab === "prospectos") view.innerHTML = vistaProspectos();
+  else if (tab === "patron") view.innerHTML = vistaPatron(m);
+  else view.innerHTML = vistaGuia();
+}
+
+function vistaProspectos() {
+  const p = actual();
+  return `<div class="work">
+    <div class="panel">
+      <div class="panel-pad" style="border-bottom:1px solid var(--rule)">
+        <label class="f"><span>Filtrar</span>
+          <select id="filtro">
+            <option value="todos"${filtro==="todos"?" selected":""}>Todos (${datos.length})</option>
+            ${ESTADOS.map(e => `<option value="${e.id}"${filtro===e.id?" selected":""}>${e.label} (${datos.filter(d=>d.estado===e.id).length})</option>`).join("")}
+          </select>
+        </label>
+      </div>
+      <div class="ledger">${listaHTML()}</div>
+    </div>
+    ${p ? detalleHTML(p) : `<div class="panel empty">
+      Aprieta <b>+ Seller e-commerce</b> arriba para anotar al primero.<br>
+      Meta: ${META_LISTA} en lista, ${META_CONV} conversaciones.
+    </div>`}
+  </div>`;
+}
+
+function listaHTML() {
+  const vis = filtro === "todos" ? datos : datos.filter(p => p.estado === filtro);
+  if (!vis.length) return `<p class="empty">Sin prospectos aquí todavía.</p>`;
+  return vis.map(p => {
+    const est = ESTADOS.find(e => e.id === p.estado);
+    const seg = SEGMENTOS.find(s => s.id === p.seg);
+    return `<button class="row" data-sel="${p.id}" aria-current="${p.id === sel}">
+      <span class="row-top">
+        <span class="row-name">${esc(p.negocio || p.nombre || "Sin nombre")}</span>
+        <span class="chip c-${p.estado}">${est ? est.label : ""}</span>
+      </span>
+      <span class="row-seg">${seg ? seg.label : ""}</span>
+      ${p.canales ? `<span class="row-sub">${esc(p.canales)}</span>` : ""}
+      ${p.dolores.length ? `<span class="row-sub" style="color:var(--mark)">${p.dolores.length} dolor${p.dolores.length>1?"es":""} etiquetado${p.dolores.length>1?"s":""}</span>` : ""}
+    </button>`;
+  }).join("");
+}
+
+function plantillasDe(p) { return PLANTILLAS.filter(t => t.seg === p.seg || t.seg === "ambos"); }
+function doloresDe(p)    { return DOLORES.filter(d => d.seg === p.seg || d.seg === "ambos"); }
+
+function mensajeDe(p) {
+  const lista = plantillasDe(p);
+  const tpl = lista.find(t => t.id === p._tpl) || lista[0];
+  const dolor = (DOLORES.find(d => d.id === p.dolores[0]) || {}).label || "…";
+  return tpl.texto
+    .replace(/\{nombre\}/g,  p.nombre  || "…")
+    .replace(/\{negocio\}/g, p.negocio || "tu negocio")
+    .replace(/\{canales\}/g, p.canales || "varios canales")
+    .replace(/\{dolor\}/g,   dolor);
+}
+
+function detalleHTML(p) {
+  const seg = SEGMENTOS.find(s => s.id === p.seg);
+  const lista = plantillasDe(p);
+  const tplId = (lista.find(t => t.id === p._tpl) || lista[0]).id;
+  const e = p.entrevista;
+  const esContratista = p.seg === "contratista";
+
+  return `<div class="panel">
+    <div class="seg-head">
+      <strong>${seg.label}</strong>
+      <p>${seg.desc}</p>
+    </div>
+
+    <div class="panel-pad grid2">
+      ${campo("nombre","Persona",p.nombre,"Nombre de pila")}
+      ${campo("negocio","Empresa",p.negocio,"Nombre del negocio")}
+      ${campo("canales", esContratista ? "Mandantes" : "Canales donde vende", p.canales,
+              esContratista ? "Codelco, constructora X" : "MercadoLibre, Shopify, Falabella")}
+      ${campo("contacto","Contacto",p.contacto,"@instagram / correo / +569")}
+      ${campo("fuente","Dónde lo encontré",p.fuente,"Grupo de Facebook de sellers")}
+      <label class="f"><span>Estado</span>
+        <select data-campo="estado">
+          ${ESTADOS.map(x => `<option value="${x.id}"${p.estado===x.id?" selected":""}>${x.label}</option>`).join("")}
+        </select>
+      </label>
+    </div>
+
+    <section class="block">
+      <h3>Mensaje listo para enviar</h3>
+      <label class="f" style="margin-bottom:10px"><span>Canal</span>
+        <select data-campo="_tpl">
+          ${lista.map(t => `<option value="${t.id}"${t.id===tplId?" selected":""}>${t.canal}</option>`).join("")}
+        </select>
+      </label>
+      <pre class="msg" id="msg">${esc(mensajeDe(p))}</pre>
+      <button id="btn-copy">Copiar mensaje</button>
+      <p class="hint">Personalízalo antes de enviar. 40 mensajes escritos a mano convierten
+      más que 400 automatizados, y no arriesgan tus cuentas.</p>
+    </section>
+
+    <section class="block">
+      <h3>Dolores que mencionó</h3>
+      <div class="pains">
+        ${doloresDe(p).map(d => `<button class="pain" data-dolor="${d.id}" aria-pressed="${p.dolores.includes(d.id)}">
+          ${d.h ? `<span class="h">${d.h}</span>` : ""}${esc(d.label)}</button>`).join("")}
+      </div>
+      <p class="hint">Etiqueta sólo lo que mencionó <em>espontáneamente</em>. Si se lo sugeriste tú, no cuenta.</p>
+    </section>
+
+    <section class="block">
+      <h3>Entrevista</h3>
+      ${e ? PREGUNTAS.map((q, i) => `<div class="q">
+            <p>${i+1}. ${esc(q.t)}</p>
+            ${q.nota ? `<p class="note">${esc(q.nota)}</p>` : ""}
+            <textarea rows="2" data-ent="${q.k}" placeholder="Sus palabras exactas, no tu resumen">${esc(e[q.k])}</textarea>
+          </div>`).join("") + `
+          <label class="f"><span>Monto que declara haber perdido (CLP)</span>
+            <input type="number" data-ent="monto" value="${e.monto == null ? "" : e.monto}" placeholder="0">
+          </label>`
+        : `<button id="btn-entrevista">Registrar entrevista</button>`}
+    </section>
+
+    <section class="block">
+      <label class="f"><span>Notas</span>
+        <textarea rows="3" data-campo="notas">${esc(p.notas)}</textarea>
+      </label>
+      <p style="margin:14px 0 0"><button class="quiet" id="btn-del">Eliminar prospecto</button></p>
+    </section>
+  </div>`;
+}
+
+function campo(k, label, val, ph) {
+  return `<label class="f"><span>${label}</span>
+    <input data-campo="${k}" value="${esc(val)}" placeholder="${esc(ph)}"></label>`;
+}
+
+function vistaPatron(m) {
+  const max = Math.max(...m.ranking.map(r => r.n), UMBRAL);
+  return `<div class="panel panel-pad" style="margin-bottom:18px">
+    <h2 style="margin:0 0 4px;font-size:19px">Dolores más mencionados</h2>
+    <p style="margin:0 0 18px;color:var(--ink-soft);font-size:14px;max-width:62ch">
+      Un dolor necesita <b>${UMBRAL} menciones espontáneas</b> para considerarse real.
+      Por debajo puede ser casualidad o sesgo de quien pregunta.</p>
+    ${m.ranking.length ? `<ul class="rank">${m.ranking.map(d => {
+      const hit = d.n >= UMBRAL;
+      return `<li class="${hit ? "hit" : ""}">
+        <div class="rank-top">
+          <span>${d.h ? `<span class="h" style="font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-right:6px">${d.h}</span>` : ""}${esc(d.label)}</span>
+          <span class="rank-n">${d.n}</span>
+        </div>
+        <div class="rank-track"><div class="rank-fill ${hit ? "hit" : ""}" style="width:${(d.n/max)*100}%"></div></div>
+      </li>`;
+    }).join("")}</ul>` : `<p class="empty">Todavía no hay dolores etiquetados. Aparecerán a medida que registres entrevistas.</p>`}
+  </div>
+
+  <div class="panel panel-pad">
+    <h2 style="margin:0 0 8px;font-size:19px">Dinero declarado en juego</h2>
+    <p class="big-money">${CLP.format(m.monto)}</p>
+    <p style="margin:8px 0 0;color:var(--ink-soft);font-size:14px;max-width:62ch">
+      Suma de lo que los entrevistados dicen haber perdido por problemas operacionales.
+      Es el argumento de venta más fuerte que vas a tener, y sale de su boca, no de la tuya.</p>
+  </div>`;
+}
+
+function vistaGuia() {
+  return `<div class="panel panel-pad" style="margin-bottom:18px">
+    <h2 style="margin:0 0 12px;font-size:19px">Cómo se usa</h2>
+    <ol class="steps">
+      <li>Aprieta <b>+ Seller e-commerce</b> y anota a alguien real.</li>
+      <li>Elige el canal, aprieta <b>Copiar mensaje</b> y envíalo.</li>
+      <li>Cambia el estado a <b>Contactado</b>.</li>
+      <li>Si responde, registra la entrevista con sus palabras exactas.</li>
+      <li>Etiqueta los dolores que mencionó solo, sin que se los sugirieras.</li>
+      <li>Cinco por noche. En dos semanas son 40 conversaciones.</li>
+    </ol>
+  </div>
+
+  <div class="panel panel-pad" style="margin-bottom:18px">
+    <h2 style="margin:0 0 12px;font-size:19px">Las 5 preguntas</h2>
+    <ol class="steps">
+      ${PREGUNTAS.map(q => `<li>${esc(q.t)}${q.nota ? `<br><span style="color:var(--signal);font-size:12.5px">${esc(q.nota)}</span>` : ""}</li>`).join("")}
+    </ol>
+  </div>
+
+  <div class="panel panel-pad" style="margin-bottom:18px">
+    <h2 style="margin:0 0 12px;font-size:19px">Plantillas</h2>
+    ${PLANTILLAS.map(t => {
+      const s = SEGMENTOS.find(x => x.id === t.seg);
+      return `<div class="tmpl">
+        <h4>${esc(t.canal)} <span>· ${s ? s.label : "ambos segmentos"}</span></h4>
+        <pre class="msg" style="margin:0">${esc(t.texto)}</pre></div>`;
+    }).join("")}
+  </div>
+
+  <div class="panel panel-pad">
+    <h2 style="margin:0 0 12px;font-size:19px">Qué NO hacer estos 14 días</h2>
+    <ul class="steps">
+      <li>No construir producto.</li>
+      <li>No diseñar logo, marca ni landing.</li>
+      <li>No comprar dominio, herramientas ni publicidad. El presupuesto es CLP 0.</li>
+      <li>No automatizar el envío: 40 mensajes a mano convierten más que 400 automatizados.</li>
+      <li>No hablar de "IA". Al cliente le importa el resultado.</li>
+    </ul>
+  </div>`;
+}
+
+// ─── Eventos ──────────────────────────────────────────────────────────────
+document.addEventListener("click", ev => {
+  const t = ev.target.closest("button");
+  if (!t) return;
+
+  if (t.dataset.tab) { tab = t.dataset.tab; render(); return; }
+
+  if (t.dataset.add) {
+    const p = nuevo(t.dataset.add);
+    datos.unshift(p); sel = p.id; tab = "prospectos"; guardar(); render(); return;
+  }
+
+  if (t.dataset.sel) { sel = t.dataset.sel; render(); return; }
+
+  if (t.dataset.dolor) {
+    const p = actual(); if (!p) return;
+    const id = t.dataset.dolor;
+    p.dolores = p.dolores.includes(id) ? p.dolores.filter(x => x !== id) : [...p.dolores, id];
+    guardar(); render(); return;
+  }
+
+  if (t.id === "btn-entrevista") {
+    const p = actual(); if (!p) return;
+    p.entrevista = nuevaEntrevista(); p.estado = "entrevistado";
+    guardar(); render(); return;
+  }
+
+  if (t.id === "btn-copy") {
+    const p = actual(); if (!p) return;
+    navigator.clipboard.writeText(mensajeDe(p)).then(() => {
+      t.textContent = "Copiado ✓";
+      setTimeout(() => { t.textContent = "Copiar mensaje"; }, 1800);
+    });
+    return;
+  }
+
+  if (t.id === "btn-del") {
+    const p = actual(); if (!p) return;
+    if (!confirm("¿Eliminar este prospecto?")) return;
+    datos = datos.filter(x => x.id !== p.id); sel = null; guardar(); render(); return;
+  }
+
+  // El respaldo se copia al portapapeles en vez de descargarse: el visor web
+  // bloquea las descargas, y copiar funciona igual en el navegador y en el archivo local.
+  if (t.id === "btn-export") {
+    const json = JSON.stringify(datos, null, 2);
+    navigator.clipboard.writeText(json).then(() => {
+      t.textContent = "Copiado ✓";
+      setTimeout(() => { t.textContent = "Respaldar"; }, 2200);
+    }).catch(() => {
+      document.getElementById("respaldo").value = json;
+      document.getElementById("respaldo-box").hidden = false;
+    });
+    return;
+  }
+
+  if (t.id === "btn-import") {
+    const box = document.getElementById("respaldo-box");
+    box.hidden = false;
+    document.getElementById("respaldo").value = "";
+    document.getElementById("respaldo").focus();
+    return;
+  }
+
+  if (t.id === "btn-restaurar") {
+    const txt = document.getElementById("respaldo").value.trim();
+    if (!txt) return;
+    try {
+      const d = JSON.parse(txt);
+      if (!Array.isArray(d)) throw new Error();
+      datos = d; sel = null; guardar();
+      document.getElementById("respaldo-box").hidden = true;
+      render();
+    } catch { alert("Ese texto no es un respaldo válido."); }
+    return;
+  }
+
+  if (t.id === "btn-cerrar-respaldo") {
+    document.getElementById("respaldo-box").hidden = true;
+    return;
+  }
+});
+
+document.addEventListener("input", ev => {
+  const el = ev.target;
+  const p = actual();
+
+  if (el.id === "filtro") { filtro = el.value; render(); return; }
+  if (!p) return;
+
+  if (el.dataset.campo) {
+    const k = el.dataset.campo;
+    if (k === "estado" && el.value !== "por_contactar" && !p.fecha)
+      p.fecha = new Date().toISOString().slice(0, 10);
+    p[k] = el.value;
+    guardar();
+    // Sólo el mensaje necesita refrescarse en vivo; re-renderizar todo haría
+    // perder el foco del campo que se está escribiendo.
+    if (["nombre","negocio","canales","_tpl"].includes(k)) {
+      const pre = document.getElementById("msg");
+      if (pre) pre.textContent = mensajeDe(p);
+    }
+    if (k === "estado" || k === "_tpl") render();
+    return;
+  }
+
+  if (el.dataset.ent) {
+    const k = el.dataset.ent;
+    if (!p.entrevista) p.entrevista = nuevaEntrevista();
+    p.entrevista[k] = k === "monto" ? (el.value === "" ? null : Number(el.value)) : el.value;
+    guardar();
+    return;
+  }
+});
+
+cargar();
+render();
+</script>
