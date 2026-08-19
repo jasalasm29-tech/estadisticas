@@ -4,8 +4,8 @@ import PremiumCheckout from "@/components/PremiumCheckout";
 import { getSessionUser } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Hazte Premium · PRISM",
-  description: "Desbloquea el dashboard y las recomendaciones ilimitadas de PRISM.",
+  title: "Hazte Premium · Prisma 137",
+  description: "Desbloquea el dashboard y las recomendaciones ilimitadas de Prisma 137.",
 };
 
 export const dynamic = "force-dynamic";
@@ -25,29 +25,29 @@ export default async function PreciosPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="text-center">
-        <span className="glass inline-block px-4 py-1.5 text-sm font-medium text-google-blue">
+        <span className="glass inline-block px-4 py-1.5 text-sm font-medium text-signal-600">
           Plan Premium
         </span>
-        <h1 className="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl">
-          Desbloquea todo PRISM
+        <h1 className="mt-4 text-3xl font-bold text-navy-800 sm:text-4xl">
+          Desbloquea todo Prisma 137
         </h1>
-        <p className="mx-auto mt-3 max-w-lg text-gray-600">
+        <p className="mx-auto mt-3 max-w-lg text-muted">
           {isPremium
             ? "Ya eres Premium. ¡Gracias! Accede a tu dashboard."
             : "El dashboard y las recomendaciones en vivo son exclusivas de Premium."}
         </p>
       </div>
 
-      <div className="glass mt-10 p-8" style={{ borderTop: "3px solid #4285F4" }}>
+      <div className="glass mt-10 p-8" style={{ borderTop: "3px solid #C08A3E" }}>
         <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-extrabold text-gray-900">$6.990</span>
-          <span className="text-gray-500">CLP / mes</span>
+          <span className="text-4xl font-extrabold text-navy-800">$6.990</span>
+          <span className="text-muted">CLP / mes</span>
         </div>
 
         <ul className="mt-6 space-y-3">
           {premiumFeatures.map((f) => (
-            <li key={f} className="flex items-center gap-3 text-sm text-gray-700">
-              <span className="text-google-green">✓</span>
+            <li key={f} className="flex items-center gap-3 text-sm text-navy-700">
+              <span className="text-value">✓</span>
               {f}
             </li>
           ))}
@@ -59,7 +59,7 @@ export default async function PreciosPage() {
               Ir al Dashboard
             </Link>
           ) : user ? (
-            <PremiumCheckout className="btn-primary w-full" />
+            <PremiumCheckout className="btn-premium w-full" />
           ) : (
             <Link href="/login?next=/precios" className="btn-primary w-full">
               Regístrate para continuar
@@ -68,7 +68,7 @@ export default async function PreciosPage() {
         </div>
 
         {!user && !isPremium && (
-          <p className="mt-4 text-center text-xs text-gray-500">
+          <p className="mt-4 text-center text-xs text-muted">
             ¿Aún no tienes cuenta? El registro es gratis.
           </p>
         )}

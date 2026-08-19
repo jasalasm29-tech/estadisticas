@@ -56,21 +56,21 @@ export default function PreferencesForm({
 
   return (
     <div className="glass mt-6 p-6">
-      <h2 className="font-semibold text-gray-900">Preferencias</h2>
-      <p className="mt-1 text-sm text-gray-600">
+      <h2 className="font-semibold text-navy-800">Preferencias</h2>
+      <p className="mt-1 text-sm text-muted">
         Personaliza tus recomendaciones y comunicaciones.
       </p>
 
       <div className="mt-6 space-y-5">
         <div>
-          <label htmlFor="sport" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="sport" className="block text-sm font-medium text-navy-700">
             Deporte favorito
           </label>
           <select
             id="sport"
             value={favoriteSport}
             onChange={(e) => setFavoriteSport(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none focus:border-google-blue focus:ring-2 focus:ring-google-blue/20"
+            className="mt-1 w-full rounded-xl border border-line px-4 py-2.5 text-navy-800 outline-none focus:border-signal-500 focus:ring-2 focus:ring-signal-500/20"
           >
             <option value="futbol">Fútbol</option>
             <option value="basket">Básquetbol</option>
@@ -79,14 +79,14 @@ export default function PreferencesForm({
         </div>
 
         <div>
-          <label htmlFor="risk" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="risk" className="block text-sm font-medium text-navy-700">
             Tolerancia al riesgo
           </label>
           <select
             id="risk"
             value={riskTolerance}
             onChange={(e) => setRiskTolerance(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none focus:border-google-blue focus:ring-2 focus:ring-google-blue/20"
+            className="mt-1 w-full rounded-xl border border-line px-4 py-2.5 text-navy-800 outline-none focus:border-signal-500 focus:ring-2 focus:ring-signal-500/20"
           >
             <option value="low">Baja</option>
             <option value="medium">Media</option>
@@ -94,18 +94,18 @@ export default function PreferencesForm({
           </select>
         </div>
 
-        <label className="flex items-start gap-2 text-sm text-gray-700">
+        <label className="flex items-start gap-2 text-sm text-navy-700">
           <input
             type="checkbox"
             checked={marketing}
             onChange={(e) => setMarketing(e.target.checked)}
-            className="mt-0.5 h-4 w-4 accent-google-blue"
+            className="mt-0.5 h-4 w-4 accent-signal-500"
           />
           <span>Quiero recibir novedades y recomendaciones por correo.</span>
         </label>
 
-        {error && <p className="text-sm text-google-red">{error}</p>}
-        {saved && <p className="text-sm text-google-green">Preferencias guardadas.</p>}
+        {error && <p className="text-sm text-risk">{error}</p>}
+        {saved && <p className="text-sm text-value">Preferencias guardadas.</p>}
 
         <button onClick={handleSave} disabled={saving} className="btn-primary disabled:opacity-60">
           {saving ? "Guardando…" : "Guardar preferencias"}

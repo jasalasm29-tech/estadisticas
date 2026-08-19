@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Prisma 137">
+  <title>Prisma 137 — emblema circular</title>
+  <circle cx="32" cy="32" r="29" fill="none" stroke="#152B4F" stroke-width="4"/>
+  <path d="M32 18 L45 44 H19 Z" fill="none" stroke="#2E6FD8" stroke-width="4.5"
+        stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

@@ -1,8 +1,8 @@
 {
-  "name": "prism",
+  "name": "prisma137",
   "version": "1.0.0",
   "private": true,
-  "description": "PRISM - Plataforma de análisis deportivo y recomendaciones de apuestas inteligentes",
+  "description": "Prisma 137 — Análisis estadístico deportivo: probabilidad, valor esperado y gestión de riesgo",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

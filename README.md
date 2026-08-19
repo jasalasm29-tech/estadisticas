@@ -1,11 +1,17 @@
-# PRISM 🔷
+# Prisma 137 🔷
 
-**Transforma datos en decisiones inteligentes.**
+**Convertimos ruido deportivo en señal estadística.**
 
-PRISM es una plataforma de análisis deportivo y recomendaciones de apuestas
-inteligentes construida con Next.js 14. Combina modelos estadísticos, gestión
-de bankroll y seguimiento de ROI en una interfaz moderna con dark mode y
-glassmorphism.
+Un prisma no crea la luz: la descompone. Prisma 137 es una plataforma de
+análisis estadístico deportivo construida con Next.js 14: modelos de
+probabilidad, valor esperado frente a la cuota de mercado, gestión de bankroll
+y seguimiento de ROI con el histórico completo a la vista.
+
+El nombre viene de la constante de estructura fina (α ≈ 1/137).
+
+> 🎨 **Antes de tocar cualquier cosa visual, lee [`brand/BRAND.md`](brand/BRAND.md).**
+> El kit de marca completo —paleta, tipografía, logo, redes y contenido— vive
+> en [`brand/`](brand/).
 
 ## ✨ Características
 
@@ -30,9 +36,19 @@ glassmorphism.
 
 ## 🎨 Diseño
 
-- **Colores Google:** Azul `#4285F4`, Rojo `#EA4335`, Amarillo `#FBBC05`, Verde `#34A853`
-- **Tipografía:** Inter
-- **Estilo:** Tema claro, glassmorphism suave, acentos multicolor estilo Google
+Manual completo en [`brand/BRAND.md`](brand/BRAND.md). Resumen:
+
+| | Hex | Clase Tailwind | Rol |
+| --- | --- | --- | --- |
+| Prisma Navy | `#152B4F` | `navy-800` | Color base |
+| Azul Señal | `#2E6FD8` | `signal-500` | Acento primario, CTA |
+| Crema Lente | `#F5F1E6` | `cream-100` | Fondo cálido |
+| Bronce Telescopio | `#C08A3E` | `bronze-500` | Premium, detalle |
+
+- **Tipografía:** Poppins (titulares) + Inter (cuerpo y datos)
+- **Proporción:** 60 % crema · 25 % navy · 10 % azul · 5 % bronce
+- **Semánticos (solo datos):** `value` `#159B6B` · `risk` `#D24B3E` · `warn` `#E0A32E`
+- Un hex suelto en un componente es un bug: usa las clases de `tailwind.config.ts`.
 
 ## 📡 Datos reales
 
@@ -59,7 +75,7 @@ para un cron (p. ej. Vercel Cron). El dashboard prioriza: **Supabase → motor
 
 ## 🔐 Acceso por niveles (Supabase Auth + SSR)
 
-PRISM separa el contenido por nivel de acceso, gestionado con `@supabase/ssr`
+Prisma 137 separa el contenido por nivel de acceso, gestionado con `@supabase/ssr`
 (sesión por cookies) y un `middleware.ts` que protege las rutas:
 
 | Página | Acceso |
@@ -94,6 +110,15 @@ en `app/layout.tsx` solo cuando hay client ID.
 ## 📁 Estructura
 
 ```
+brand/                       # ← Kit de marca (lee BRAND.md primero)
+  BRAND.md                   # Manual de marca completo
+  tokens/                    # Paleta en CSS y JSON
+  logo/                      # Isotipo, emblema, lockups, favicon (SVG)
+  social/
+    PERFILES.md              # Bios y medidas de Instagram y LinkedIn
+    CONTENIDO.md             # Pilares, ritmo semanal, sistema de feed
+    plantillas/              # Artboards HTML + script de exportación
+    export/                  # PNG listos para subir
 app/
   layout.tsx          # Layout raíz (Header, Footer, ThemeProvider)
   page.tsx            # Home (hero, features, pricing, CTA)
@@ -106,7 +131,7 @@ app/
 components/
   Header.tsx          # Header con navbar + auth
   Footer.tsx          # Footer con links y redes
-  Logo.tsx            # Logo PRISM
+  Logo.tsx            # Isotipo + wordmark Prisma 137
   ThemeProvider.tsx   # Proveedor de dark mode
   StatCard.tsx        # Card de métrica
   RecommendationCard.tsx     # Card de recomendación (móvil)
@@ -203,9 +228,9 @@ funcionando con datos mock.
 
 ## ⚠️ Juego responsable
 
-Esta plataforma es informativa. Las apuestas implican riesgo y PRISM no
+Esta plataforma es informativa. Las apuestas implican riesgo y Prisma 137 no
 garantiza ganancias. Juega con responsabilidad. +18.
 
 ## 📄 Licencia
 
-Uso privado. Todos los derechos reservados © PRISM.
+Uso privado. Todos los derechos reservados © Prisma 137.

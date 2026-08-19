@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300" role="img" aria-label="Prisma 137">
+  <title>Prisma 137 — avatar 300×300</title>
+  <rect width="300" height="300" fill="#F5F1E6"/>
+  <g transform="translate(47,47) scale(3.2)">
+    <circle cx="32" cy="32" r="29" fill="none" stroke="#152B4F" stroke-width="4"/>
+    <path d="M32 18 L45 44 H19 Z" fill="none" stroke="#2E6FD8" stroke-width="4.5"
+          stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+</svg>

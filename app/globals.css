@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tokens de marca. Espejo de brand/tokens/prisma-137.css — si cambias uno,
+   cambia el otro. El manual está en brand/BRAND.md. */
 :root {
   color-scheme: light;
+
+  --p137-navy-800: #152b4f;
+  --p137-signal-500: #2e6fd8;
+  --p137-bronze-500: #c08a3e;
+  --p137-cream-100: #f5f1e6;
+  --p137-ink: #0f2140;
 }
 
 html {
@@ -11,34 +19,51 @@ html {
 }
 
 body {
-  /* Fondo claro con un sutil degradado de los colores Google */
-  @apply bg-[#F8FAFC] text-gray-900 antialiased;
-  font-family: "Inter", system-ui, sans-serif;
+  /* Crema Lente: el fondo cálido que separa a Prisma 137 del azul corporativo genérico */
+  @apply bg-cream-50 text-ink antialiased;
+  font-family: var(--font-inter), Inter, system-ui, sans-serif;
+}
+
+/* Poppins solo en titulares y wordmark; Inter carga todo lo demás. */
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-poppins), Poppins, system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }
 
 @layer components {
-  /* Tarjeta tipo glassmorphism en tema claro */
+  /* Superficie base: crema sobre crema, borde suave, sombra azulada */
   .glass {
-    @apply rounded-2xl border border-gray-200 bg-white/80 shadow-sm backdrop-blur-md;
+    @apply rounded-lg border border-line bg-white/85 shadow-soft backdrop-blur-md;
   }
 
-  /* Texto con gradiente multicolor Google */
+  /* Gradiente de refracción como texto. Nunca en párrafos de lectura. */
   .text-gradient {
-    @apply bg-prism-gradient bg-clip-text text-transparent;
+    @apply bg-prisma-signal bg-clip-text text-transparent;
   }
 
-  /* Botón primario (azul Google) */
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl bg-google-blue px-6 py-3 font-semibold text-white shadow-lg shadow-google-blue/20 transition-all duration-200 hover:scale-[1.03] hover:bg-[#3b78e7] focus:outline-none focus:ring-2 focus:ring-google-blue focus:ring-offset-2;
+    @apply inline-flex items-center justify-center rounded-md bg-signal-500 px-6 py-3 font-semibold text-white shadow-card transition-all duration-200 hover:bg-signal-600 hover:shadow-lift focus:outline-none focus:ring-2 focus:ring-signal-500 focus:ring-offset-2 focus:ring-offset-cream-50;
   }
 
-  /* Botón secundario (borde) */
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 font-semibold text-gray-700 transition-all duration-200 hover:border-google-blue hover:text-google-blue focus:outline-none focus:ring-2 focus:ring-google-blue;
+    @apply inline-flex items-center justify-center rounded-md border border-line bg-white px-6 py-3 font-semibold text-navy-800 transition-all duration-200 hover:border-signal-500 hover:text-signal-600 focus:outline-none focus:ring-2 focus:ring-signal-500;
+  }
+
+  /* Bronce = Premium. Un solo acento bronce por pantalla. */
+  .btn-premium {
+    @apply inline-flex items-center justify-center rounded-md bg-navy-800 px-6 py-3 font-semibold text-bronze-300 shadow-card transition-all duration-200 hover:bg-navy-700 focus:outline-none focus:ring-2 focus:ring-bronze-500;
+  }
+
+  /* Cifras alineadas en columna: sin esto las tablas de cuotas bailan. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
   }
 }
 
-/* Scrollbar discreto */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -47,6 +72,14 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(21, 43, 79, 0.2);
   border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(21, 43, 79, 0.35);
+}
+
+::selection {
+  background: rgba(46, 111, 216, 0.2);
+  color: #0f2140;
 }

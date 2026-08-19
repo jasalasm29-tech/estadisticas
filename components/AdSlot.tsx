@@ -43,7 +43,7 @@ export default function AdSlot({
       role="complementary"
       aria-label="Espacio publicitario"
     >
-      <p className="mb-1 text-center text-[10px] uppercase tracking-widest text-gray-400">
+      <p className="mb-1 text-center text-[10px] uppercase tracking-widest text-muted/70">
         {label}
       </p>
 
@@ -58,7 +58,7 @@ export default function AdSlot({
         />
       ) : (
         // Placeholder: reserva el espacio del anuncio cuando AdSense no está activo.
-        <div className="flex min-h-[90px] items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50 text-sm text-gray-400">
+        <div className="flex min-h-[90px] items-center justify-center rounded-xl border border-dashed border-line bg-cream-50 text-sm text-muted/70">
           Espacio reservado para Google AdSense
         </div>
       )}

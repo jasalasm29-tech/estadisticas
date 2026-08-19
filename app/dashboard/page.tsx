@@ -8,8 +8,8 @@ import { getRecommendations, computeStats } from "@/lib/recommendations";
 import { Stat } from "@/lib/types";
 
 export const metadata: Metadata = {
-  title: "Dashboard · PRISM",
-  description: "Tus métricas, ROI y recomendaciones activas en PRISM.",
+  title: "Dashboard · Prisma 137",
+  description: "Tus métricas, ROI y recomendaciones activas en Prisma 137.",
 };
 
 // Datos siempre frescos en cada request (lee de Supabase si está configurado).
@@ -39,16 +39,16 @@ export default async function DashboardPage() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="mt-1 text-gray-600">
+          <h1 className="text-3xl font-bold text-navy-800">Dashboard</h1>
+          <p className="mt-1 text-muted">
             Resumen de tu rendimiento y recomendaciones del día.
           </p>
         </div>
         <span
           className={`rounded-full px-3 py-1 text-xs font-semibold ${
             source === "mock"
-              ? "bg-google-yellow/15 text-[#b8860b]"
-              : "bg-google-green/10 text-google-green"
+              ? "bg-warn/15 text-bronze-700"
+              : "bg-value/10 text-value"
           }`}
         >
           {source === "supabase"
@@ -85,9 +85,9 @@ export default async function DashboardPage() {
       <section className="glass mt-8 flex flex-col items-center gap-4 p-8 text-center sm:flex-row sm:justify-between sm:text-left">
         <div>
           <h2 className="text-xl font-semibold text-gradient">
-            Desbloquea todo el potencial de PRISM
+            Desbloquea todo el potencial de Prisma 137
           </h2>
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="mt-1 text-sm text-muted">
             Recomendaciones ilimitadas, alertas y análisis avanzado por $6.990 CLP/mes.
           </p>
         </div>

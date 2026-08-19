@@ -5,8 +5,8 @@ import { createClient, getSessionUser } from "@/lib/supabase/server";
 import PreferencesForm from "@/components/PreferencesForm";
 
 export const metadata: Metadata = {
-  title: "Mi cuenta · PRISM",
-  description: "Gestiona tu cuenta y preferencias en PRISM.",
+  title: "Mi cuenta · Prisma 137",
+  description: "Gestiona tu cuenta y preferencias en Prisma 137.",
 };
 
 export const dynamic = "force-dynamic";
@@ -24,14 +24,14 @@ export default async function CuentaPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-gray-900">Mi cuenta</h1>
-      <p className="mt-1 text-gray-600">{user.email}</p>
+      <h1 className="text-3xl font-bold text-navy-800">Mi cuenta</h1>
+      <p className="mt-1 text-muted">{user.email}</p>
 
       {/* Estado del plan */}
       <div className="glass mt-8 flex items-center justify-between p-6">
         <div>
-          <p className="text-sm text-gray-500">Tu plan</p>
-          <p className="text-lg font-semibold text-gray-900">
+          <p className="text-sm text-muted">Tu plan</p>
+          <p className="text-lg font-semibold text-navy-800">
             {isPremium ? "Premium" : "Gratuito"}
           </p>
         </div>

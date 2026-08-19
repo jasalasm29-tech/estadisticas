@@ -1,4 +1,4 @@
-// Tipos TypeScript compartidos en toda la plataforma PRISM
+// Tipos TypeScript compartidos en toda la plataforma Prisma 137
 
 /** Nivel de riesgo asociado a una recomendación */
 export type RiskLevel = "low" | "medium" | "high";

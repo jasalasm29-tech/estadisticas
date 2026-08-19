@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Prisma 137 — Plantillas sociales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#0A1730; --navy-900:#0F2140; --navy-800:#152B4F;
+    --blue-600:#1F5BB8; --blue-500:#2E6FD8; --blue-400:#5A92E6; --blue-300:#8FB6F0;
+    --bronze-500:#C08A3E; --bronze-300:#DEB77E;
+    --cream-100:#F5F1E6; --cream-50:#FBF9F4; --cream-200:#E9E2D1;
+    --muted:#5B6B85; --line:#DDE3EC;
+    --grad:linear-gradient(120deg,#152B4F 0%,#2E6FD8 45%,#5A92E6 70%,#C08A3E 100%);
+    --display:"Poppins",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#E7EAF0;font-family:var(--body);padding:48px;color:var(--navy-900)}
+  h1{font-family:var(--display);font-size:32px;letter-spacing:-.02em;margin-bottom:8px}
+  .lede{color:var(--muted);margin-bottom:40px;max-width:60ch;line-height:1.6}
+  .row{display:flex;flex-wrap:wrap;gap:40px;margin-bottom:56px;align-items:flex-start}
+  .item{display:flex;flex-direction:column;gap:10px}
+  .label{font-size:13px;font-weight:600;color:var(--muted);font-family:var(--body)}
+  .art{overflow:hidden;box-shadow:0 24px 48px -16px rgba(21,43,79,.28);flex:none}
+
+  /* ---------- Artboards ---------- */
+  .sq{width:1080px;height:1080px}
+  .vt{width:1080px;height:1350px}
+  .st{width:1080px;height:1920px}
+  .banner{width:1128px;height:191px}
+  .scale-30{zoom:.30}   /* solo para previsualizar en pantalla */
+  .scale-25{zoom:.25}
+  .scale-50{zoom:.50}
+
+  /* ---------- Tipo A: fondo navy ---------- */
+  .tA{background:var(--navy-800);color:var(--cream-100);padding:80px;
+      display:flex;flex-direction:column;justify-content:space-between;position:relative}
+  .tA .eyebrow{font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-300)}
+  .tA .big{font-family:var(--display);font-weight:700;font-size:180px;line-height:.95;
+           letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+  .tA .big em{font-style:normal;color:var(--bronze-500)}
+  .tA .sub{font-size:38px;line-height:1.35;color:#C9D4E6;max-width:22ch}
+
+  /* ---------- Tipo B: fondo crema ---------- */
+  .tB{background:var(--cream-100);color:var(--navy-800);padding:80px;
+      display:flex;flex-direction:column;justify-content:space-between}
+  .tB .eyebrow{font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-600)}
+  .tB h2{font-family:var(--display);font-weight:700;font-size:88px;line-height:1.05;letter-spacing:-.03em;max-width:16ch}
+  .tB h2 em{font-style:normal;color:var(--blue-500)}
+  .tB .body{font-size:34px;line-height:1.5;color:#3D4C66;max-width:26ch}
+
+  /* ---------- Tipo C: gradiente (portada) ---------- */
+  .tC{background:var(--grad);color:#fff;padding:80px;
+      display:flex;flex-direction:column;justify-content:flex-end}
+  .tC h2{font-family:var(--display);font-weight:700;font-size:104px;line-height:1;letter-spacing:-.035em;max-width:13ch}
+  .tC .kicker{font-size:26px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+              color:rgba(255,255,255,.82);margin-bottom:28px}
+
+  /* ---------- Firma / isotipo ---------- */
+  .sig{display:flex;align-items:center;gap:16px;font-family:var(--display);
+       font-weight:700;font-size:30px;letter-spacing:-.02em}
+  .sig .n137{color:var(--bronze-500)}
+  .sig svg{height:34px;width:auto;flex:none}
+  .sig-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+  .legal{font-size:20px;color:rgba(255,255,255,.55);font-weight:500}
+  .legal.dark{color:#7A879E}
+
+  /* ---------- Barra de datos ---------- */
+  .bars{display:flex;gap:14px;align-items:flex-end;height:220px;margin:48px 0}
+  .bars i{flex:1;border-radius:10px 10px 0 0;background:var(--blue-500);display:block}
+  .bars i.up{background:var(--bronze-500)}
+  .bars i.dim{background:rgba(90,146,230,.35)}
+
+  /* ---------- Story ---------- */
+  .tS{background:var(--navy-800);color:var(--cream-100);
+      padding:250px 80px 350px;display:flex;flex-direction:column;justify-content:space-between}
+  .tS h2{font-family:var(--display);font-weight:700;font-size:110px;line-height:1.02;letter-spacing:-.035em}
+  .tS h2 em{font-style:normal;color:var(--bronze-500)}
+  .tS .safe{outline:2px dashed rgba(143,182,240,.4);outline-offset:-1px;flex:1;
+            display:flex;flex-direction:column;justify-content:center;gap:40px;padding:0 4px}
+
+  /* ---------- Banner LinkedIn ---------- */
+  .tL{background:var(--navy-800);position:relative;overflow:hidden;
+      display:flex;align-items:center;padding:0 80px}
+  .tL .beam{position:absolute;right:0;top:0;height:100%;width:620px;pointer-events:none}
+  .tL .beam svg{height:100%;width:100%;display:block}
+  .tL .txt{position:relative;z-index:1}
+  .tL .tag{font-family:var(--body);font-size:17px;color:#9DB0CC;margin-top:6px}
+</style>
+</head>
+<body>
+
+<h1>Prisma 137 — Plantillas sociales</h1>
+<p class="lede">
+  Cada artboard está a tamaño real de exportación. Se previsualizan reducidos con
+  <code>zoom</code>; quita la clase <code>scale-*</code> antes de capturar, o usa
+  <code>brand/social/plantillas/render.mjs</code>. Reglas en
+  <code>brand/social/CONTENIDO.md</code> §4.
+</p>
+
+<!-- ============ FILA 1: feed cuadrado ============ -->
+<div class="row">
+
+  <div class="item">
+    <span class="label">Tipo A · Navy · 1080×1080 · dato / transparencia</span>
+    <div class="art scale-30">
+      <div class="sq tA">
+        <div>
+          <div class="eyebrow">Semana 34 · 42 partidos</div>
+          <div class="bars">
+            <i class="dim" style="height:38%"></i><i class="dim" style="height:56%"></i>
+            <i style="height:47%"></i><i style="height:72%"></i><i class="dim" style="height:31%"></i>
+            <i style="height:64%"></i><i class="up" style="height:96%"></i>
+          </div>
+        </div>
+        <div>
+          <div class="big">+4,2<em>%</em></div>
+          <div class="sub" style="margin-top:20px">ROI acumulado sobre 1 200 partidos analizados</div>
+        </div>
+        <div class="sig-row">
+          <div class="sig">
+            <svg viewBox="0 0 96 64" fill="none" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M0 32H38" stroke="#F5F1E6"/><path d="M48 9 69 55H27Z" stroke="#F5F1E6"/>
+              <path d="M60 33 96 13" stroke="#8FB6F0"/><path d="M60 33 96 33" stroke="#5A92E6"/><path d="M60 33 96 53" stroke="#C08A3E"/>
+            </svg>
+            <span>PRISMA<span class="n137"> 137</span></span>
+          </div>
+          <div class="legal">+18 · Juega responsable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="label">Tipo B · Crema · 1080×1080 · método / educación</span>
+    <div class="art scale-30">
+      <div class="sq tB">
+        <div class="eyebrow">Método · 02</div>
+        <div>
+          <h2>La cuota no es la <em>probabilidad</em>.</h2>
+          <p class="body" style="margin-top:36px">
+            Una cuota de 2.20 implica 45 %. Si tu modelo dice 58 %, ahí hay valor.
+            Si dice 40 %, estás pagando de más.
+          </p>
+        </div>
+        <div class="sig-row">
+          <div class="sig" style="color:#152B4F">
+            <svg viewBox="0 0 96 64" fill="none" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M0 32H38" stroke="#152B4F"/><path d="M48 9 69 55H27Z" stroke="#2E6FD8"/>
+              <path d="M60 33 96 13" stroke="#5A92E6"/><path d="M60 33 96 33" stroke="#2E6FD8"/><path d="M60 33 96 53" stroke="#C08A3E"/>
+            </svg>
+            <span>PRISMA<span class="n137"> 137</span></span>
+          </div>
+          <div class="legal dark">+18 · Juega responsable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="label">Tipo C · Gradiente · 1080×1350 · portada de carrusel (1 de cada 9)</span>
+    <div class="art scale-25">
+      <div class="vt tC">
+        <div class="kicker">Guía · 7 slides</div>
+        <h2>Cómo dimensionar una apuesta sin arruinarte</h2>
+        <div class="sig-row" style="margin-top:64px">
+          <div class="sig">
+            <svg viewBox="0 0 96 64" fill="none" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M0 32H38" stroke="#fff"/><path d="M48 9 69 55H27Z" stroke="#fff"/>
+              <path d="M60 33 96 13" stroke="#fff"/><path d="M60 33 96 33" stroke="#fff"/><path d="M60 33 96 53" stroke="#F4E7D2"/>
+            </svg>
+            <span style="color:#fff">PRISMA<span style="color:#F4E7D2"> 137</span></span>
+          </div>
+          <div class="legal">Desliza →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FILA 2: story + banner ============ -->
+<div class="row">
+
+  <div class="item">
+    <span class="label">Story / Reel · 1080×1920 · zona segura marcada</span>
+    <div class="art scale-25">
+      <div class="st tS">
+        <div class="safe">
+          <div class="eyebrow" style="font-size:26px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8FB6F0">Transparencia</div>
+          <h2>Esta semana <em>perdimos</em>.</h2>
+          <p style="font-size:40px;line-height:1.45;color:#C9D4E6">
+            −1,8 % sobre 38 partidos. Aquí está el número, y aquí está el porqué.
+          </p>
+          <div class="sig" style="margin-top:24px">
+            <svg viewBox="0 0 96 64" fill="none" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M0 32H38" stroke="#F5F1E6"/><path d="M48 9 69 55H27Z" stroke="#F5F1E6"/>
+              <path d="M60 33 96 13" stroke="#8FB6F0"/><path d="M60 33 96 33" stroke="#5A92E6"/><path d="M60 33 96 53" stroke="#C08A3E"/>
+            </svg>
+            <span>PRISMA<span class="n137"> 137</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="label">Banner LinkedIn · 1128×191 · contenido dentro del 70 % central</span>
+    <div class="art scale-50">
+      <div class="banner tL">
+        <!-- Refracción a gran escala, sangrando por el borde derecho -->
+        <svg class="beam" viewBox="0 0 620 191" preserveAspectRatio="none" aria-hidden="true">
+          <g fill="none" stroke-width="13" stroke-linecap="round">
+            <path d="M40 96 H242" stroke="#3A5580"/>
+            <path d="M270 40 L330 152 H210 Z" stroke="#2E6FD8" stroke-linejoin="round"/>
+            <path d="M300 100 L620 24"  stroke="#8FB6F0"/>
+            <path d="M300 100 L620 100" stroke="#5A92E6"/>
+            <path d="M300 100 L620 176" stroke="#C08A3E"/>
+          </g>
+        </svg>
+        <div class="txt">
+          <div class="sig" style="font-size:34px">
+            <svg viewBox="0 0 96 64" fill="none" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" style="height:38px">
+              <path d="M0 32H38" stroke="#F5F1E6"/><path d="M48 9 69 55H27Z" stroke="#F5F1E6"/>
+              <path d="M60 33 96 13" stroke="#8FB6F0"/><path d="M60 33 96 33" stroke="#5A92E6"/><path d="M60 33 96 53" stroke="#C08A3E"/>
+            </svg>
+            <span style="color:#F5F1E6">PRISMA<span style="color:#DEB77E"> 137</span></span>
+          </div>
+          <div class="tag">Convertimos ruido deportivo en señal estadística.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

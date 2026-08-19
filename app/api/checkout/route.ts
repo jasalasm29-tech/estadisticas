@@ -24,11 +24,11 @@ export async function POST(req: NextRequest) {
     const customerEmail = email ?? "cliente@prism.cl";
 
     const origin = req.nextUrl.origin;
-    const commerceOrder = `PRISM-${Date.now()}`;
+    const commerceOrder = `P137-${Date.now()}`;
 
     const { url, flowOrder } = await createFlowPayment({
       commerceOrder,
-      subject: "PRISM Premium - Suscripción mensual",
+      subject: "Prisma 137 Premium - Suscripción mensual",
       amount: PREMIUM_PRICE_CLP,
       email: customerEmail,
       urlConfirmation: `${origin}/api/checkout/confirm`,

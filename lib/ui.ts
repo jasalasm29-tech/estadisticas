@@ -4,15 +4,15 @@ import { RecommendationStatus, RiskLevel } from "./types";
 // Paleta Google: verde (bajo/ganada), amarillo (medio/pendiente), rojo (alto/perdida), azul.
 
 export const riskStyles: Record<RiskLevel, string> = {
-  low: "bg-google-green/10 text-google-green border border-google-green/30",
-  medium: "bg-google-yellow/15 text-[#b8860b] border border-google-yellow/40",
-  high: "bg-google-red/10 text-google-red border border-google-red/30",
+  low: "bg-value/10 text-value border border-value/30",
+  medium: "bg-warn/15 text-bronze-700 border border-warn/40",
+  high: "bg-risk/10 text-risk border border-risk/30",
 };
 
 export const statusStyles: Record<RecommendationStatus, string> = {
-  pending: "bg-google-blue/10 text-google-blue border border-google-blue/30",
-  won: "bg-google-green/10 text-google-green border border-google-green/30",
-  lost: "bg-google-red/10 text-google-red border border-google-red/30",
+  pending: "bg-signal-500/10 text-signal-600 border border-signal-500/30",
+  won: "bg-value/10 text-value border border-value/30",
+  lost: "bg-risk/10 text-risk border border-risk/30",
 };
 
 export const statusLabels: Record<RecommendationStatus, string> = {

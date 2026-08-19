@@ -66,16 +66,16 @@ function LoginForm() {
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-12">
       <div className="glass p-8">
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-navy-800">
           {mode === "signin" ? "Iniciar sesión" : "Crear cuenta gratis"}
         </h1>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-muted">
           {mode === "signin"
-            ? "Accede a tu cuenta de PRISM."
+            ? "Accede a tu cuenta de Prisma 137."
             : "Regístrate gratis y guarda tus preferencias."}
         </p>
 
-        <div className="mt-6 flex gap-2 rounded-xl bg-gray-100 p-1">
+        <div className="mt-6 flex gap-2 rounded-xl bg-cream-100 p-1">
           {(["signin", "signup"] as Mode[]).map((m) => (
             <button
               key={m}
@@ -85,7 +85,7 @@ function LoginForm() {
                 setMessage(null);
               }}
               className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                mode === m ? "bg-white text-google-blue shadow-sm" : "text-gray-500"
+                mode === m ? "bg-white text-signal-600 shadow-sm" : "text-muted"
               }`}
             >
               {m === "signin" ? "Entrar" : "Registrarse"}
@@ -95,7 +95,7 @@ function LoginForm() {
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-navy-700">
               Correo electrónico
             </label>
             <input
@@ -104,12 +104,12 @@ function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition-colors focus:border-google-blue focus:ring-2 focus:ring-google-blue/20"
+              className="mt-1 w-full rounded-xl border border-line px-4 py-2.5 text-navy-800 outline-none transition-colors focus:border-signal-500 focus:ring-2 focus:ring-signal-500/20"
               placeholder="tu@correo.cl"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium text-navy-700">
               Contraseña
             </label>
             <input
@@ -119,42 +119,42 @@ function LoginForm() {
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-gray-300 px-4 py-2.5 text-gray-900 outline-none transition-colors focus:border-google-blue focus:ring-2 focus:ring-google-blue/20"
+              className="mt-1 w-full rounded-xl border border-line px-4 py-2.5 text-navy-800 outline-none transition-colors focus:border-signal-500 focus:ring-2 focus:ring-signal-500/20"
               placeholder="••••••••"
             />
           </div>
 
           {mode === "signup" && (
             <div className="space-y-2">
-              <label className="flex items-start gap-2 text-sm text-gray-700">
+              <label className="flex items-start gap-2 text-sm text-navy-700">
                 <input
                   type="checkbox"
                   checked={terms}
                   onChange={(e) => setTerms(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 accent-google-blue"
+                  className="mt-0.5 h-4 w-4 accent-signal-500"
                 />
                 <span>
                   Acepto los{" "}
-                  <Link href="#" className="text-google-blue hover:underline">
+                  <Link href="#" className="text-signal-600 hover:underline">
                     términos y la política de privacidad
                   </Link>
                   .
                 </span>
               </label>
-              <label className="flex items-start gap-2 text-sm text-gray-700">
+              <label className="flex items-start gap-2 text-sm text-navy-700">
                 <input
                   type="checkbox"
                   checked={marketing}
                   onChange={(e) => setMarketing(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 accent-google-blue"
+                  className="mt-0.5 h-4 w-4 accent-signal-500"
                 />
                 <span>Quiero recibir novedades y recomendaciones por correo.</span>
               </label>
             </div>
           )}
 
-          {error && <p className="text-sm text-google-red">{error}</p>}
-          {message && <p className="text-sm text-google-green">{message}</p>}
+          {error && <p className="text-sm text-risk">{error}</p>}
+          {message && <p className="text-sm text-value">{message}</p>}
 
           <button type="submit" disabled={loading} className="btn-primary w-full disabled:opacity-60">
             {loading ? "Procesando…" : mode === "signin" ? "Entrar" : "Crear cuenta"}
